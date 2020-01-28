@@ -1,103 +1,79 @@
 package com.DigitaleFactuur.db;
 
 import com.DigitaleFactuur.models.Declaration;
-import com.google.common.base.Optional;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class DeclarationDAO extends AbstractDAO<Declaration> {
 
-    Connection con;
+    private ResultSet result = null;
 
     public DeclarationDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
-    public List<Declaration> findForUser(long id) {
-        return list(
-                namedQuery("com.udemy.core.Declaration.findForUser")
-                        .setParameter("id", id)
-        );
-    }
-
-    public String deleteQuery(int id){
-        return "DELETE FROM declaration WHERE declarationID='" + id + "';";
-    }
-
-    private String SQLgetDeclarationByOwnerID(int ownerID){
+    private String getDeclarationByOwnerIDQuery(int ownerID) {
         return "SELECT * FROM declaration WHERE ownerID = '" + ownerID + "'";
     }
 
-    public String SQLdeleteDeclarationByOwnerID(int declarationID){
-        return "DELETE FROM declaration WHERE declarationID='" + declarationID + "';";
+    private String deleteDeclarationByIDQuery(int declarationID) {
+        return "DELETE FROM declaration WHERE declarationID = '" + declarationID + "';";
     }
 
-
-    public ArrayList<Declaration> getDeclarationsByOwnerID(int ownerID){
-        ArrayList<Declaration> decs = new ArrayList<>();
-        try{
-            con = DatabaseConnector.getConnection();
-            String getCarsByOwnerID = SQLgetDeclarationByOwnerID(ownerID);
-            PreparedStatement CarsByOwnerID = con.prepareStatement(getCarsByOwnerID);
-            ResultSet result = CarsByOwnerID.executeQuery();
-            while (result.next()){
-                Declaration dec = new Declaration(
-                        result.getInt("declarationID"),
-                        result.getInt("ownerID"),
-                        result.getString("decDesc"),
-                        result.getInt("decKilometers"),
-                        result.getDouble("decDeclaration"),
-                        result.getString("decBeginPostal"),
-                        result.getString("decBeginHouseNumber"),
-                        result.getString("decBeginStreet"),
-                        result.getString("decBeginCity"),
-                        result.getString("decBeginCountry"),
-                        result.getString("decEndPostal"),
-                        result.getString("decEndHouseNumber"),
-                        result.getString("decEndStreet"),
-                        result.getString("decEndCity"),
-                        result.getString("decEndCountry"));
-                decs.add(dec);
-            }
-        }catch(SQLException e){
-        }
-        return decs;
+    private String deleteDeclarationByOwnerIDQuery(int ownerID) {
+        return "DELETE FROM declaration WHERE ownerID = '" + ownerID + "';";
     }
 
-    public void deleteDeclarationById(int id) throws SQLException {
+    public ArrayList<Declaration> getDeclarationsByOwnerID(int ownerID) {
+        ArrayList<Declaration> declarations = new ArrayList<>();
         try {
-            con = DatabaseConnector.getConnection();
-            PreparedStatement deleteDeclarationById = con.prepareStatement(deleteQuery(id));
-            deleteDeclarationById.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            result = DatabaseConnector.executeDatabaseQuery(getDeclarationByOwnerIDQuery(ownerID));
+            if (result != null) {
+                while (result.next()) {
+                    Declaration declaration = createDeclaration();
+                    declarations.add(declaration);
+                }
+            }
+        } catch (SQLException ignored) {
+        } finally {
+            DatabaseConnector.closeDatabaseConnection(result);
         }
+        return declarations;
     }
 
-    public Optional<Declaration> findByID(long id) {
-        return Optional.fromNullable(get(id));
-    }
-
-    public Declaration save(Declaration declaration) {
+    public Declaration saveDeclaration(Declaration declaration) {
         return persist(declaration);
     }
 
-    public void delete(Declaration declaration) {
-        namedQuery("com.udemy.core.Declaration.remove")
-                .setParameter("id", declaration.getDeclarationID())
-                .executeUpdate();
+    public void deleteDeclarationByID(int declarationID) {
+        DatabaseConnector.executeDatabaseUpdate(deleteDeclarationByIDQuery(declarationID));
     }
 
-    public void deleteDeclarationByID(int declarationID) {
-        try {
-            con = DatabaseConnector.getConnection();
-            PreparedStatement deleteCarByLicence = con.prepareStatement(SQLdeleteDeclarationByOwnerID(declarationID));
-            deleteCarByLicence.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    //wordt niet gebruikt
+    public void deleteDeclarationByOwnerID(int ownerID) {
+        DatabaseConnector.executeDatabaseUpdate(deleteDeclarationByOwnerIDQuery(ownerID));
+    }
+
+    private Declaration createDeclaration() throws SQLException {
+        return new Declaration(
+                result.getInt("declarationID"),
+                result.getInt("ownerID"),
+                result.getString("description"),
+                result.getInt("declaredKilometers"),
+                result.getDouble("declaredCompensation"),
+                result.getString("originZipcode"),
+                result.getString("originHousenumber"),
+                result.getString("originStreet"),
+                result.getString("originCity"),
+                result.getString("originCountry"),
+                result.getString("destinationZipcode"),
+                result.getString("destinationHousenumber"),
+                result.getString("destinationStreet"),
+                result.getString("destinationCity"),
+                result.getString("destinationCountry"));
     }
 }

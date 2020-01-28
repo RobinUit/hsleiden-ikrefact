@@ -1,19 +1,24 @@
 package sample.Controllers.Popups;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 
 public class DeletePopupController {
 
     @FXML
-    public void cancel(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        stage.close();
+    private AnchorPane popupPane;
+    @FXML
+    private Button acceptButton, cancelButton;
+
+    private PopupController popupController = new PopupController();
+
+    @FXML
+    public void closePopup() {
+        popupController.closePopup(popupPane);
     }
 
+    @FXML
     public void delete() {
     }
 }

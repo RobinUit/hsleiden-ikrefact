@@ -2,63 +2,27 @@ package sample.Models;
 
 public class Project {
     private int ownerID;
-    private String projectName;
-    private String projectDesc;
-    private String projectStartDate;
-    private String projectEndDate;
+    private String name;
+    private String description;
+    private String startDate;
+    private String endDate;
 
-    public Project(String projectName, String projectDesc, String projectStartDate, String projectEndDate) {
-        this.projectName = projectName;
-        this.projectDesc = projectDesc;
-        this.projectStartDate = projectStartDate;
-        this.projectEndDate = projectEndDate;
-    }
-
-    public Project(int ownerID, String projectName, String projectDesc, String projectStartDate, String projectEndDate) {
+    public Project(int ownerID, String name, String description, String startDate, String endDate) {
         this.ownerID = ownerID;
-        this.projectName = projectName;
-        this.projectDesc = projectDesc;
-        this.projectStartDate = projectStartDate;
-        this.projectEndDate = projectEndDate;
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public int getOwnerID(){return ownerID;}
-    public void setOwnerID(int ownerID){
-        this.ownerID = ownerID;
+    public String getName() {
+        return name;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-
-    public String getProjectDesc() {
-        return projectDesc;
-    }
-
-    public void setProjectDesc(String projectDesc) {
-        this.projectDesc = projectDesc;
-    }
-
-    public String getProjectStartDate() {
-        return projectStartDate;
-    }
-
-    public void setProjectStartDate(String projectStartDate) {
-        this.projectStartDate = projectStartDate;
-    }
-
-    public String getProjectEndDate() {
-        return projectEndDate;
-    }
-
-    public void setProjectEndDate(String projectEndDate) {
-        this.projectEndDate = projectEndDate;
-    }
 }
 
 

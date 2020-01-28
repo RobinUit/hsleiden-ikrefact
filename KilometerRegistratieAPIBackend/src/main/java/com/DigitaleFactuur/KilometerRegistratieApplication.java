@@ -34,7 +34,7 @@ public class KilometerRegistratieApplication extends Application<KilometerRegist
 
     @Override
     public String getName() {
-        return "DropBookmarks";
+        return "KilometerRegistratie API";
     }
 
     @Override

@@ -2,33 +2,29 @@ package com.DigitaleFactuur.services;
 
 import com.DigitaleFactuur.db.CarDAO;
 import com.DigitaleFactuur.models.Car;
-
 import java.util.ArrayList;
 
 public class CarService {
 
-    private CarDAO dao;
+    private CarDAO carDAO;
 
-    public CarService(CarDAO dao) {
-        this.dao = dao;
+    public CarService(CarDAO carDAO) {
+        this.carDAO = carDAO;
     }
 
-    public Car save(Car car) {
-        return dao.save(car);
+    public Car getCarByLicensePlate(String licensePlate) {
+        return carDAO.getCarByLicensePlate(licensePlate);
     }
 
-    public Car getCarByLicence(String licencePlate){
-        return dao.getCarByLicence(licencePlate);
+    public ArrayList<Car> getCarsByOwnerID(int ownerID) {
+        return carDAO.getCarsByOwnerID(ownerID);
     }
 
-    public ArrayList<Car> getCarsByOwnerID(int ownerID){
-        return dao.getCarsByOwnerID(ownerID);
+    public Car saveCar(Car car) {
+        return carDAO.saveCar(car);
     }
 
-    /**
-     * Call the delete function from the dao.
-     * @param licencePlate
-     * @author Tom
-     */
-    public void deleteCarByLicence(String licencePlate) {dao.deleteCarByLicence(licencePlate); }
+    public void deleteCarByLicensePlate(String licensePlate) {
+        carDAO.deleteCarByLicensePlate(licensePlate);
+    }
 }

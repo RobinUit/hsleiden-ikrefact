@@ -1,14 +1,12 @@
 package sample.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import sample.Models.Declaration;
 import sample.Models.User;
 import sample.Services.HTTPRequestHandler;
@@ -17,47 +15,50 @@ import java.util.ResourceBundle;
 
 public class DeclarationController implements Initializable {
 
-    private AppController appController = new AppController();
+    @FXML
+    private AnchorPane applicationPane;
+    @FXML
+    private CheckBox selectAllCheck, select1Check, select2Check, select3Check, select4Check, select5Check, select6Check, select7Check, select8Check, select9Check, select10Check;
+    @FXML
+    private Label val1desc, val2desc, val3desc, val4desc, val5desc, val6desc, val7desc, val8desc, val9desc, val10desc;
+    @FXML
+    private Label val1car, val2car, val3car, val4car, val5car, val6car, val7car, val8car, val9car, val10car;
+    @FXML
+    private Label val1date, val2date, val3date, val4date, val5date, val6date, val7date, val8date, val9date, val10date;
+    @FXML
+    private Label val1km, val2km, val3km, val4km, val5km, val6km, val7km, val8km, val9km, val10km;
+    @FXML
+    private Label val1amount, val2amount, val3amount, val4amount, val5amount, val6amount, val7amount, val8amount, val9amount, val10amount;
+    @FXML
+    private Text totalDeclarationsText;
+    @FXML
+    private Button closeButton, editButton, deleteButton, duplicateButton, nextPage, prevPage, logoutButton, hideButton, plusButton, profileButton, declarationButton, dashboardButton;
+
     private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
+    private AppController appController = new AppController();
 
     private int pageIndex = 0;
     private int checkBoxesSelected = 0;
-    private int lenght;
+    private int length;
 
-
-    @FXML
-    public CheckBox selectAllCheck, select1Check, select2Check, select3Check, select4Check, select5Check, select6Check, select7Check, select8Check, select9Check, select10Check;
-    @FXML
-    public Label val1desc, val2desc, val3desc, val4desc, val5desc, val6desc, val7desc, val8desc, val9desc, val10desc;
-    @FXML
-    public Label val1car, val2car, val3car, val4car, val5car, val6car, val7car, val8car, val9car, val10car;
-    @FXML
-    public Label val1date, val2date, val3date, val4date, val5date, val6date, val7date, val8date, val9date, val10date;
-    @FXML
-    public Label val1km, val2km, val3km, val4km, val5km, val6km, val7km, val8km, val9km, val10km;
-    @FXML
-    public Label val1amount, val2amount, val3amount, val4amount, val5amount, val6amount, val7amount, val8amount, val9amount, val10amount;
-    @FXML
-    public Text totalDeclarationsText;
-    @FXML
-    public Button closeButton, editButton, deleteButton, duplicateButton, nextPage, prevPage;
-
-    @FXML
-    public void reloadDeclaration(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Declaration", node, "inherit");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadDeclarations();
     }
 
     @FXML
-    public void openDashboard(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Dashboard", node, "inherit");
+    public void reloadDeclaration() {
+        loadDeclarations();
     }
 
-    @FXML
-    public void openProfile(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Profile", node, "inherit");
+    private void loadDeclarations() {
+        length = initdecs(0);
+        setPageIndex(length);
+
+        checkCheckboxesHandler();
+        editButton.setDisable(true);
+        duplicateButton.setDisable(true);
+        deleteButton.setDisable(true);
     }
 
     private void showADeclaration(Label desc, Label cr, Label dat, Label km, Label am, String description, String car, String date, String kilometers, String amount){
@@ -104,12 +105,6 @@ public class DeclarationController implements Initializable {
                 showADeclaration(val10desc, val10car, val10date, val10km, val10amount, description, car, date, kilometers, amount);
                 break;
         }
-    }
-
-    @FXML
-    public void openCreateDeclaration(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("CreateDeclaration", node, "inherit");
     }
 
     @FXML
@@ -176,68 +171,42 @@ public class DeclarationController implements Initializable {
         });
     }
 
-    @FXML
-    public void edit() {
-    }
-
-    @FXML
-    public void delete() {
-    }
-
-    @FXML
-    public void duplicate() {
-    }
-
-    /**
-     * voor het invullen van de declaraties op het declaratie scherm vanuit de database.
-     * @return totale aantal declaraties
-     */
     private int initdecs(int page) {
-        Declaration[] d = httpRequestHandler.getDeclarationsByID("/declaration/getDeclarationsByOwnerID/" + User.getUserID());
-        for (int i = page; i < d.length; i++) {
-
+        Declaration[] declarations = httpRequestHandler.getDeclarationsByID("/declaration/getDeclarationsByOwnerID/" + User.getUserID());
+        for (int i = page; i < declarations.length; i++) {
             showIndexedDeclaration(i+1,
                     page,
-                    d[i].getDecDesc(),
-                    d[i].getDecBeginPostal().toUpperCase(),
-                    d[i].getDecEndPostal().toUpperCase(),
-                    Double.toString(d[i].getDecKilometers()),
-                    Double.toString(d[i].getDecDeclaration() * d[i].getDecKilometers()));
+                    declarations[i].getDescription(),
+                    declarations[i].getOriginZipcode().toUpperCase(),
+                    declarations[i].getDestinationZipcode().toUpperCase(),
+                    Double.toString(declarations[i].getDeclaredKilometers()),
+                    Double.toString(declarations[i].getDeclaredCompensation() * declarations[i].getDeclaredKilometers()));
         }
-        return d.length;
+        return declarations.length;
     }
 
-    /**
-     * voor resetten van de declaraties op het declaratie scherm voor het inladen voor nieuwe declaraties.
-     */
     private void resetdecs(){
         for (int i = 0; i < 10; i++) {
             showIndexedDeclaration(i+1, 0,"", "", "", "", "");
         }
     }
 
-    /**
-     * voor het gaan naar volgende pagina
-     */
     public void nextPage(){
         pageIndex+=10;
         try{
             resetdecs();
             initdecs(pageIndex);
-            setPageIndex(lenght);
+            setPageIndex(length);
         } catch (Exception ignored){}
     }
 
-    /**
-     * voor het gaan naar vorige pagina.
-     */
     public void prevPage(){
         if(pageIndex != 0){
             pageIndex-=10;
             try{
                 resetdecs();
                 initdecs(pageIndex);
-                setPageIndex(lenght);
+                setPageIndex(length);
             } catch (Exception ignored){}
         }
     }
@@ -264,33 +233,48 @@ public class DeclarationController implements Initializable {
         } catch (Exception ignored) {}
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        lenght = initdecs(0);
-        setPageIndex(lenght);
-
-        checkCheckboxesHandler();
-        editButton.setDisable(true);
-        duplicateButton.setDisable(true);
-        deleteButton.setDisable(true);
+    @FXML
+    public void edit() {
+        //niet geïmplementeerd
     }
 
     @FXML
-    public void close() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+    public void delete() {
+        //niet geïmplementeerd
     }
 
     @FXML
-    public void hide() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.setIconified(true);
+    public void duplicate() {
+        //niet geïmplementeerd
     }
 
     @FXML
-    public void logout(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Login", node, "center");
+    public void openDashboard() {
+        appController.changeView("Dashboard", applicationPane, "inherit");
     }
 
+    @FXML
+    public void openProfile() {
+        appController.changeView("Profile", applicationPane, "inherit");
+    }
+
+    @FXML
+    public void openCreateDeclaration() {
+        appController.changeView("CreateDeclaration", applicationPane, "inherit");
+    }
+
+    @FXML
+    public void logout() {
+        appController.logout(applicationPane);
+    }
+
+    @FXML
+    public void minimizeApplication() {
+        appController.minimizeApplication(applicationPane);
+    }
+
+    @FXML
+    public void closeApplication() {
+        appController.closeApplication(applicationPane);
+    }
 }

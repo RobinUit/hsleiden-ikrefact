@@ -9,32 +9,61 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import sample.Utility.WindowStyle;
-
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 
 public class Main extends Application {
 
+    private Parent applicationView;
+    private Scene applicationScene;
+    private Stage applicationStage;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/LoginView.fxml"));
+    public void start(Stage applicationStage) {
+        this.applicationStage = applicationStage;
 
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        WindowStyle.allowDrag(root, primaryStage);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/AppIcon.png")));
-        primaryStage.setTitle("Kilometer Registratie");
+        setupView();
+        setupScene();
+        setupStage(this.applicationStage);
 
-        Scene scene = new Scene(root, 500, 500);
-        scene.setFill(Color.TRANSPARENT);
-        primaryStage.setScene(scene);
+        applicationStage.show();
+    }
 
-        primaryStage.show();
+    private void setupView() {
+        try {
+            applicationView = FXMLLoader.load(getClass().getResource("/FXML/LoginView.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void setupScene() {
+        applicationScene = new Scene(applicationView);
+        applicationScene.setFill(Color.TRANSPARENT);
+    }
+
+    private void setupStage(Stage applicationStage) {
+        WindowStyle windowStyle = new WindowStyle();
+
+        windowStyle.enableStageDrag(applicationView, applicationStage);
+
+        applicationStage.initStyle(StageStyle.TRANSPARENT);
+        applicationStage.setTitle("Kilometer Registratie");
+
+        applicationStage.setScene(applicationScene);
+
+        setApplicationIcon();
+    }
+
+    private void setApplicationIcon() {
         try {
             URL iconURL = Main.class.getResource("/img/AppIcon.png");
             java.awt.Image image = new ImageIcon(iconURL).getImage();
             com.apple.eawt.Application.getApplication().setDockIconImage(image);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+            applicationStage.getIcons().add(new Image(getClass().getResourceAsStream("/img/AppIcon.png")));
+        }
     }
 
     public static void main(String[] args) {

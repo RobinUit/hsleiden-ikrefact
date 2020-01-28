@@ -1,4 +1,5 @@
 package com.DigitaleFactuur.auth;
+
 import com.DigitaleFactuur.models.User;
 import io.dropwizard.auth.Authorizer;
 

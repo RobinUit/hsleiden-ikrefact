@@ -1,117 +1,92 @@
-
 package com.DigitaleFactuur.db;
 
 import com.DigitaleFactuur.models.User;
-import com.google.common.base.Optional;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
-
-import java.sql.*;
-import java.util.List;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserDAO extends AbstractDAO<User> {
 
-    Connection con;
+    private ResultSet result = null;
 
     public UserDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
-    public String getQuery(String getValue){
-        return "SELECT * FROM user WHERE email = '" + getValue + "'";
+    private static String getUserByEmailQuery(String email) {
+        return "SELECT * FROM user WHERE email = '" + email + "';";
     }
 
-    public String getIDQuery(int getValue){
-        return "SELECT * FROM user WHERE id = '" + getValue + "'";
+    private static String getUserByIDQuery(int id) {
+        return "SELECT * FROM user WHERE id = '" + id + "';";
     }
 
-    public String SQLdeleteUserById(int id){
-        return "DELETE FROM user WHERE id='" + id + "';";
+    private static String getUserIDByEmailQuery(String email) {
+        return "SELECT id FROM user WHERE email = '" + email + "';";
     }
 
-    private String SQLgetUserIDByEmail(String email){
-        return "SELECT id FROM user WHERE email = '" + email+ "'";
+    private static String deleteUserByIDQuery(int id) {
+        return "DELETE FROM user WHERE id = '" + id + "';";
     }
 
     public User getUserByEmail(String email) {
         try {
-            con = DatabaseConnector.getConnection();
-            PreparedStatement getUserByEmail = con.prepareStatement(getQuery(email));
-            ResultSet result = getUserByEmail.executeQuery();
-            while (result.next()) {
-                User user = new User(result.getString(2), result.getString(3), result.getString(4));
-                return user;
+            result = DatabaseConnector.executeDatabaseQuery(UserDAO.getUserByEmailQuery(email));
+            if (result != null) {
+                result.next();
+                return createUser();
             }
-            return null;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnector.closeDatabaseConnection(result);
         }
         return null;
     }
 
     public User getUserByID(int id) {
         try {
-            con = DatabaseConnector.getConnection();
-            PreparedStatement getUserByEmail = con.prepareStatement(getIDQuery(id));
-            ResultSet result = getUserByEmail.executeQuery();
-            while (result.next()) {
-                User user = new User(result.getString(2), result.getString(3), result.getString(4));
-                return user;
+            result = DatabaseConnector.executeDatabaseQuery(UserDAO.getUserByIDQuery(id));
+            if (result != null) {
+                result.next();
+                return createUser();
             }
-            return null;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DatabaseConnector.closeDatabaseConnection(result);
         }
         return null;
     }
 
-    public int getUserIDByEmail(String email){
+    public int getUserIDByEmail(String email) {
         int userID = 0;
-        try{
-            con = DatabaseConnector.getConnection();
-            String getUserIDByEmail = SQLgetUserIDByEmail(email);
-            PreparedStatement getIdByEmail = con.prepareStatement(getUserIDByEmail);
-            ResultSet rs = getIdByEmail.executeQuery();
-            if (rs.next()){
-                userID = rs.getInt("id");
+        try {
+            result = DatabaseConnector.executeDatabaseQuery(UserDAO.getUserIDByEmailQuery(email));
+            if (result != null) {
+                result.next();
+                userID = result.getInt("id");
             }
-        }catch(SQLException e){
+        } catch (SQLException ignored) {
+        } finally {
+            DatabaseConnector.closeDatabaseConnection(result);
         }
         return userID;
     }
 
-    public void deleteUserById(int id) {
-        try {
-            con = DatabaseConnector.getConnection();
-            PreparedStatement deleteUserById = con.prepareStatement(SQLdeleteUserById(id));
-            deleteUserById.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void deleteUserByID(int id) {
+        DatabaseConnector.executeDatabaseUpdate(UserDAO.deleteUserByIDQuery(id));
     }
 
-    public List<User> findAll() {
-        return list(
-                namedQuery(
-                        "com.udemy.core.User.findAll"
-                )
-        );
-    }
-    public Optional<User> findByUsername(
-            String username
-            //,String password
-    ) {
-        return Optional.fromNullable(
-                uniqueResult(
-                        namedQuery("com.udemy.core.User.findByUsername")
-                                .setParameter("username", username)
-                        //.setParameter("password", password)
-                )
-        );
-    }
-
-    public User save(User user) {
+    public User saveUser(User user) {
         return persist(user);
+    }
+
+    private User createUser() throws SQLException {
+        return new User(
+                result.getString("email"),
+                result.getString("username"),
+                result.getString("password"));
     }
 }

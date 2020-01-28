@@ -1,78 +1,62 @@
 package com.DigitaleFactuur.db;
 
 import com.DigitaleFactuur.models.Client;
-import com.google.common.base.Optional;
-import com.sun.media.jfxmedia.locator.ConnectionHolder;
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
-
-import java.sql.*;
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ClientDAO extends AbstractDAO<Client> {
 
-    Connection con;
+    private ResultSet result = null;
 
     public ClientDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
-    private String SQLgetClientByName(String name){
-        return "SELECT * FROM client WHERE clientName = '" + name+ "'";
+    private static String getClientByNameQuery(String name) {
+        return "SELECT * FROM client WHERE name = '" + name + "';";
     }
 
-    public String SQLdeleteClientByName(String clientName){
-        return "DELETE FROM client WHERE clientName='" + clientName + "';";
+    private static String deleteClientByNameQuery(String name) {
+        return "DELETE FROM client WHERE name = '" + name + "';";
     }
 
-    public Optional<Client> findByID(long id) {
-        return Optional.fromNullable(get(id));
-    }
-
-    public Client save(Client client) {
-        return persist(client);
-    }
-
-    public void delete(Client client) {
-        namedQuery("com.udemy.core.Client.remove")
-                .setParameter("id", client.getClientID())
-                .executeUpdate();
-    }
-
-    /**
-     * Get client d.m.v. de klantnaam op te zoeken.
-     * @param clientName - klantnaam
-     * @return client
-     * @author Richard
-     */
     public Client getClientByName(String clientName) {
         try {
-            con = DatabaseConnector.getConnection();
-            String getClientByClientNameStatement = SQLgetClientByName(clientName);
-            PreparedStatement getClientByClientName = con.prepareStatement(getClientByClientNameStatement);
-            ResultSet result = getClientByClientName.executeQuery();
-            while (result.next()) {
-                Client client = new Client(
-                        result.getString("clientName"),
-                        result.getString("clientPostalCode"),
-                        result.getInt("clientHouseNumber"),
-                        result.getString("clientCity"),
-                        result.getString("clientCountry"));
-                return client;
+            result = DatabaseConnector.executeDatabaseQuery(
+                    ClientDAO.getClientByNameQuery(clientName));
+            if (result != null) {
+                result.next();
+                return createClient();
             }
-        }catch(SQLException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DatabaseConnector.closeDatabaseConnection(result);
         }
         return null;
     }
 
-    public void deleteClientByName(String clientName) {
-        try {
-            con = DatabaseConnector.getConnection();
-            PreparedStatement deleteClientByName = con.prepareStatement(SQLdeleteClientByName(clientName));
-            deleteClientByName.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public Client saveClient(Client client) {
+        return persist(client);
     }
+
+    public void deleteClientByName(String clientName) {
+        DatabaseConnector.executeDatabaseUpdate(
+                ClientDAO.deleteClientByNameQuery(clientName));
+    }
+
+    private Client createClient() throws SQLException {
+        return new Client(
+                result.getInt("ownerID"),
+                result.getString("name"),
+                result.getString("zipcode"),
+                result.getInt("housenumber"),
+                result.getString("street"),
+                result.getString("city"),
+                result.getString("country"));
+    }
+
 
 }

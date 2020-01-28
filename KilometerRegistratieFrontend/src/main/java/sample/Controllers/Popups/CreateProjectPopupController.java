@@ -4,9 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sample.Models.Project;
 import sample.Models.User;
@@ -16,25 +18,21 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class CreateProjectPopupController implements Initializable {
+public class CreateProjectPopupController {
 
-    private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
-
+    @FXML
+    private AnchorPane popupPane;
+    @FXML
+    private Button saveButton, closeButton;
     @FXML
     private TextField nameField;
-
     @FXML
     private TextArea descriptionField;
-
     @FXML
     private DatePicker beginDateField, endDateField;
 
-    @FXML
-    void close(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        stage.close();
-    }
+    private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
+    private PopupController popupController = new PopupController();
 
     @FXML
     void save(ActionEvent event) throws Exception {
@@ -54,14 +52,12 @@ public class CreateProjectPopupController implements Initializable {
 
             Project project = new Project(ownerID, name, description, beginDate, endDate);
             httpRequestHandler.postHandler("/project/create", project);
+            closePopup();
         }
-        //close
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        stage.close();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    void closePopup() {
+        popupController.closePopup(popupPane);
     }
 }

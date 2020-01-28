@@ -13,414 +13,532 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane id="transp" maxHeight="850.0" maxWidth="1000.0" minHeight="850.0" minWidth="1000.0" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: transparent;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DeclarationController">
-    <children>
-        <AnchorPane id="mainpane" layoutX="10.0" layoutY="10.0" prefHeight="830.0" prefWidth="980.0" style="-fx-background-color: #EBEFF0;" stylesheets="@../css/style.css">
-            <children>
-                <Rectangle arcHeight="2.0" arcWidth="5.0" fill="#56c8ad" height="98.0" layoutY="24.0" stroke="#56c8ad" strokeType="INSIDE" width="980.0" />
-                <Pane prefHeight="82.0" prefWidth="980.0" style="-fx-background-radius: 10; -fx-background-color: #56c8ad;">
-               <children>
-                  <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="824.0" layoutY="1.0" maxHeight="35.0" maxWidth="80.0" minHeight="35.0" minWidth="80.0" mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="80.0" text="Log uit" textFill="#5d656f">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button fx:id="hideButton" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" layoutX="904.0" mnemonicParsing="false" onAction="#hide" prefHeight="20.0" prefWidth="11.0" text="-" textAlignment="CENTER">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="20.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="939.0" layoutY="-1.0" maxHeight="30.0" maxWidth="30.0" mnemonicParsing="false" onAction="#close" prefHeight="30.0" prefWidth="30.0" text="X" textAlignment="CENTER">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="20.0" />
-                     </font>
-                  </Button>
-               </children></Pane>
-                <Button fx:id="dashboardButton" layoutX="324.0" layoutY="41.0" mnemonicParsing="false" onAction="#openDashboard" prefHeight="82.0" prefWidth="333.0" style="-fx-background-color: transparent;" text="Dashboard" textFill="#98e1d2">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="28.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-                <Button id="profilebutton" fx:id="profilebutton" layoutX="668.0" layoutY="41.0" mnemonicParsing="false" onAction="#openProfile" prefHeight="82.0" prefWidth="312.0" style="-fx-background-color: transparent;" text="Profiel" textFill="#98e1d2">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="28.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
-                <Button id="declarationbutton" fx:id="declarationbutton" layoutX="-2.0" layoutY="41.0" mnemonicParsing="false" onAction="#reloadDeclaration" prefHeight="82.0" prefWidth="312.0" style="-fx-background-color: transparent;" text="Declaraties" textFill="WHITE">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="28.0" />
-                    </font>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </Button>
+<Pane id="transp" maxHeight="850.0" maxWidth="1000.0" minHeight="850.0" minWidth="1000.0" prefHeight="850.0"
+      prefWidth="1000.0" style="-fx-background-color: transparent;" stylesheets="@../css/style.css"
+      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="sample.Controllers.DeclarationController">
+    <AnchorPane id="mainpane" fx:id="applicationPane" layoutX="10.0" layoutY="10.0" prefHeight="830.0"
+                prefWidth="980.0" style="-fx-background-color: #EBEFF0;" stylesheets="@../css/style.css">
+        <Rectangle arcHeight="2.0" arcWidth="5.0" fill="#56c8ad" height="98.0" layoutY="24.0" stroke="#56c8ad"
+                   strokeType="INSIDE" width="980.0"/>
+        <Pane prefHeight="82.0" prefWidth="980.0"
+              style="-fx-background-radius: 10; -fx-background-color: #56c8ad;">
+            <Button fx:id="logoutButton" alignment="CENTER" contentDisplay="CENTER" layoutX="824.0"
+                    layoutY="1.0" maxHeight="35.0" maxWidth="80.0" minHeight="35.0" minWidth="80.0"
+                    mnemonicParsing="false" onAction="#logout" prefHeight="35.0" prefWidth="80.0" text="Log uit"
+                    textFill="#5d656f">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="16.0"/>
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND"/>
+                </cursor>
+            </Button>
+            <Button fx:id="hideButton" alignment="CENTER" cancelButton="true" contentDisplay="CENTER"
+                    layoutX="904.0" mnemonicParsing="false" onAction="#minimizeApplication" prefHeight="20.0" prefWidth="11.0"
+                    text="-" textAlignment="CENTER">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="20.0"/>
+                </font>
+            </Button>
+            <Button fx:id="closeButton" alignment="CENTER" contentDisplay="CENTER" layoutX="939.0"
+                    layoutY="-1.0" maxHeight="30.0" maxWidth="30.0" mnemonicParsing="false" onAction="#closeApplication"
+                    prefHeight="30.0" prefWidth="30.0" text="X" textAlignment="CENTER">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="20.0"/>
+                </font>
+            </Button>
+        </Pane>
+        <Button fx:id="dashboardButton" layoutX="324.0" layoutY="41.0" mnemonicParsing="false"
+                onAction="#openDashboard" prefHeight="82.0" prefWidth="333.0"
+                style="-fx-background-color: transparent;" text="Dashboard" textFill="#98e1d2">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="28.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <Button id="profilebutton" fx:id="profileButton" layoutX="668.0" layoutY="41.0" mnemonicParsing="false"
+                onAction="#openProfile" prefHeight="82.0" prefWidth="312.0"
+                style="-fx-background-color: transparent;" text="Profiel" textFill="#98e1d2">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="28.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <Button id="declarationbutton" fx:id="declarationButton" layoutX="-2.0" layoutY="41.0"
+                mnemonicParsing="false" onAction="#reloadDeclaration" prefHeight="82.0" prefWidth="312.0"
+                style="-fx-background-color: transparent;" text="Declaraties" textFill="WHITE">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="28.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
         <GridPane layoutX="124.0" layoutY="156.0" prefHeight="432.0" prefWidth="724.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="30.0" prefWidth="30.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="300.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="105.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="93.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="80.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="30.0" prefWidth="30.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="300.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="105.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="93.0" prefWidth="80.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="80.0"/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES"/>
             </rowConstraints>
-            <children>
-                <Label alignment="CENTER" prefHeight="44.0" prefWidth="244.0" text="Omschijving" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-            <Label alignment="CENTER" prefHeight="44.0" prefWidth="154.0" text="Begin postcode" textAlignment="CENTER" textFill="#5d656f" wrapText="true" GridPane.columnIndex="2">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label alignment="CENTER" prefHeight="44.0" prefWidth="244.0" text="Omschijving"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="78.0" prefWidth="273.0" text="Eind postcode" textAlignment="CENTER" textFill="#5d656f" wrapText="true" GridPane.columnIndex="3">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label alignment="CENTER" prefHeight="44.0" prefWidth="154.0" text="Begin postcode"
+                   textAlignment="CENTER" textFill="#5d656f" wrapText="true" GridPane.columnIndex="2">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Aantal kilometers" textAlignment="CENTER" textFill="#5d656f" wrapText="true" GridPane.columnIndex="4">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label alignment="CENTER" prefHeight="78.0" prefWidth="273.0" text="Eind postcode"
+                   textAlignment="CENTER" textFill="#5d656f" wrapText="true" GridPane.columnIndex="3">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="46.0" prefWidth="123.0" text="Bedrag" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label alignment="CENTER" prefHeight="46.0" prefWidth="200.0" text="Aantal kilometers"
+                   textAlignment="CENTER" textFill="#5d656f" wrapText="true" GridPane.columnIndex="4">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-                <CheckBox fx:id="selectAllCheck" mnemonicParsing="false" onAction="#selectAll" prefHeight="20.0" prefWidth="20.0" />
-            <CheckBox fx:id="select1Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="1" />
-            <CheckBox fx:id="select2Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="2" />
-            <CheckBox fx:id="select3Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="3" />
-            <CheckBox fx:id="select4Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="4" />
-            <CheckBox fx:id="select5Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="5" />
-            <CheckBox fx:id="select6Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="6" />
-            <CheckBox fx:id="select7Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="7" />
-            <CheckBox fx:id="select8Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="8" />
-            <CheckBox fx:id="select9Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="9" />
-            <CheckBox fx:id="select10Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" GridPane.rowIndex="10" />
-                <Label fx:id="val1desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-                <Label fx:id="val2desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-                <Label fx:id="val3desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-                <Label fx:id="val4desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-                <Label fx:id="val5desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-                <Label fx:id="val6desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="17.0" />
-                    </font>
-                </Label>
-            <Label fx:id="val1car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label alignment="CENTER" prefHeight="46.0" prefWidth="123.0" text="Bedrag" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="5">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val1date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <CheckBox fx:id="selectAllCheck" mnemonicParsing="false" onAction="#selectAll" prefHeight="20.0"
+                      prefWidth="20.0"/>
+            <CheckBox fx:id="select1Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="1"/>
+            <CheckBox fx:id="select2Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="2"/>
+            <CheckBox fx:id="select3Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="3"/>
+            <CheckBox fx:id="select4Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="4"/>
+            <CheckBox fx:id="select5Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="5"/>
+            <CheckBox fx:id="select6Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="6"/>
+            <CheckBox fx:id="select7Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="7"/>
+            <CheckBox fx:id="select8Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="8"/>
+            <CheckBox fx:id="select9Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="9"/>
+            <CheckBox fx:id="select10Check" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"
+                      GridPane.rowIndex="10"/>
+            <Label fx:id="val1desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val1km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val2desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val1amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="1">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val3desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val2car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val4desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val2date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val5desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val2km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val6desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val2amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val1car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val3car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val1date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val3date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val1km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val3km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val1amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="5" GridPane.rowIndex="1">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val3amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="3">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val2car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val4car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val2date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val4date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val2km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val4km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val2amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val4amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="4">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val3car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val5car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="5">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val3date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="3" GridPane.rowIndex="3">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val5date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="5">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val3km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="4" GridPane.rowIndex="3">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val5km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="5">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val3amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="5" GridPane.rowIndex="3">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val5amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="5">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val4car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val6car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="6">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val4date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val6date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="6">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val4km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val6km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="6">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val4amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val6amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="6">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val5car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="2" GridPane.rowIndex="5">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val7desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val5date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="3" GridPane.rowIndex="5">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val8desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val5km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="4" GridPane.rowIndex="5">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val9desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="9">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val5amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="5" GridPane.rowIndex="5">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val10desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="10">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val6car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val7car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="19.0" />
-               </font>
+            <Label fx:id="val6date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val8car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val6km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val9car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="9">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val6amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val10car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="10">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val7desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="1" GridPane.rowIndex="7">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val7date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val8desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val8date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val9desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="1" GridPane.rowIndex="9">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val9date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="9">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val10desc" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val10date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="10">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val7car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="2" GridPane.rowIndex="7">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="19.0"/>
+                </font>
             </Label>
-            <Label fx:id="val7km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val8car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val8km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val9car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="2" GridPane.rowIndex="9">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val9km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="9">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val10car" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="2" GridPane.rowIndex="10">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val10km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="10">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val7date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="3" GridPane.rowIndex="7">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val7amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="7">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val8date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val8amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="8">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val9date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="3" GridPane.rowIndex="9">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val9amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="9">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val10date" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="3" GridPane.rowIndex="10">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            <Label fx:id="val10amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="10">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="17.0" />
-               </font>
+            <Label fx:id="val7km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="4" GridPane.rowIndex="7">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
             </Label>
-            </children>
+            <Label fx:id="val8km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
+            <Label fx:id="val9km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="4" GridPane.rowIndex="9">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
+            <Label fx:id="val10km" alignment="CENTER" prefHeight="78.0" prefWidth="273.0" textAlignment="CENTER"
+                   textFill="#5d656f" GridPane.columnIndex="4" GridPane.rowIndex="10">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
+            <Label fx:id="val7amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="5" GridPane.rowIndex="7">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
+            <Label fx:id="val8amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
+            <Label fx:id="val9amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   style="-fx-background-color: DEE2E2;" textAlignment="CENTER" textFill="#5d656f"
+                   GridPane.columnIndex="5" GridPane.rowIndex="9">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
+            <Label fx:id="val10amount" alignment="CENTER" prefHeight="78.0" prefWidth="273.0"
+                   textAlignment="CENTER" textFill="#5d656f" GridPane.columnIndex="5" GridPane.rowIndex="10">
+                <font>
+                    <Font name="Arial Rounded MT Bold" size="17.0"/>
+                </font>
+            </Label>
         </GridPane>
-      <Text fx:id="totalDeclarationsText" fill="#5d656f" layoutX="648.0" layoutY="633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1-10 van 100" textAlignment="RIGHT" wrappingWidth="200.7734375">
-         <font>
-            <Font name="Arial Rounded MT Bold" size="20.0" />
-         </font>
-      </Text>
-      <Button id="plusbutton" fx:id="plusbutton" defaultButton="true" layoutX="876.0" layoutY="729.0" maxHeight="98.0" maxWidth="98.0" minHeight="98.0" minWidth="98.0" mnemonicParsing="false" onAction="#openCreateDeclaration" prefHeight="98.0" prefWidth="98.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-      <Button fx:id="prevPage" alignment="CENTER" contentDisplay="CENTER" layoutX="431.0" layoutY="611.0" mnemonicParsing="false" onAction="#prevPage" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: #5d656f;" text="&lt;&lt;" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Arial Rounded MT Bold" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="nextPage" alignment="CENTER" contentDisplay="CENTER" layoutX="511.0" layoutY="611.0" mnemonicParsing="false" onAction="#nextPage" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: #5d656f;" text="&gt;&gt;" textFill="WHITE">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Arial Rounded MT Bold" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="deleteButton" layoutX="430.0" layoutY="717.0" mnemonicParsing="false" onAction="#delete" prefHeight="53.0" prefWidth="153.0" style="-fx-background-color: #56c8ad;" text="Verwijderen" textFill="#e5fff8">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Arial Rounded MT Bold" size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="editButton" layoutX="268.0" layoutY="717.0" mnemonicParsing="false" onAction="#edit" prefHeight="53.0" prefWidth="153.0" style="-fx-background-color: #56c8ad;" text="Bewerken" textFill="#e5fff8">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Arial Rounded MT Bold" size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="duplicateButton" layoutX="595.0" layoutY="717.0" mnemonicParsing="false" onAction="#duplicate" prefHeight="53.0" prefWidth="153.0" style="-fx-background-color: #56c8ad;" text="Dupliceren" textFill="#e5fff8">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-         <font>
-            <Font name="Arial Rounded MT Bold" size="20.0" />
-         </font>
-      </Button>
-    </children>
-</AnchorPane>
-    </children>
+        <Text fx:id="totalDeclarationsText" fill="#5d656f" layoutX="648.0" layoutY="633.0" strokeType="OUTSIDE"
+              strokeWidth="0.0" text="1-10 van 100" textAlignment="RIGHT" wrappingWidth="200.7734375">
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0"/>
+            </font>
+        </Text>
+        <Button id="plusbutton" fx:id="plusButton" defaultButton="true" layoutX="876.0" layoutY="729.0"
+                maxHeight="98.0" maxWidth="98.0" minHeight="98.0" minWidth="98.0" mnemonicParsing="false"
+                onAction="#openCreateDeclaration" prefHeight="98.0" prefWidth="98.0"
+                style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="15.0"
+                AnchorPane.rightAnchor="15.0"/>
+        <Button fx:id="prevPage" alignment="CENTER" contentDisplay="CENTER" layoutX="431.0" layoutY="611.0"
+                mnemonicParsing="false" onAction="#prevPage" prefHeight="31.0" prefWidth="69.0"
+                style="-fx-background-color: #5d656f;" text="&lt;&lt;" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Arial Rounded MT Bold" size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="nextPage" alignment="CENTER" contentDisplay="CENTER" layoutX="511.0" layoutY="611.0"
+                mnemonicParsing="false" onAction="#nextPage" prefHeight="31.0" prefWidth="69.0"
+                style="-fx-background-color: #5d656f;" text="&gt;&gt;" textFill="WHITE">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Arial Rounded MT Bold" size="15.0"/>
+            </font>
+        </Button>
+        <Button fx:id="deleteButton" layoutX="430.0" layoutY="717.0" mnemonicParsing="false" onAction="#delete"
+                prefHeight="53.0" prefWidth="153.0" style="-fx-background-color: #56c8ad;" text="Verwijderen"
+                textFill="#e5fff8">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0"/>
+            </font>
+        </Button>
+        <Button fx:id="editButton" layoutX="268.0" layoutY="717.0" mnemonicParsing="false" onAction="#edit"
+                prefHeight="53.0" prefWidth="153.0" style="-fx-background-color: #56c8ad;" text="Bewerken"
+                textFill="#e5fff8">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0"/>
+            </font>
+        </Button>
+        <Button fx:id="duplicateButton" layoutX="595.0" layoutY="717.0" mnemonicParsing="false"
+                onAction="#duplicate" prefHeight="53.0" prefWidth="153.0" style="-fx-background-color: #56c8ad;"
+                text="Dupliceren" textFill="#e5fff8">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+            <font>
+                <Font name="Arial Rounded MT Bold" size="20.0"/>
+            </font>
+        </Button>
+    </AnchorPane>
 </Pane>

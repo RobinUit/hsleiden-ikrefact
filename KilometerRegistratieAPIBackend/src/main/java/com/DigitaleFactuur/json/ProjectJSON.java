@@ -9,10 +9,9 @@ import java.util.Date;
 @XmlRootElement
 public class ProjectJSON {
         @XmlElement public int ownerID;
-        @XmlElement public String projectName;
-        @XmlElement public String projectDesc;
-        @XmlElement public String projectStartDate;
-        @XmlElement public String projectEndDate;
-
+        @XmlElement public String name;
+        @XmlElement public String description;
+        @XmlElement public String startDate;
+        @XmlElement public String endDate;
     }
 

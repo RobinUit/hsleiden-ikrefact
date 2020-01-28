@@ -1,9 +1,6 @@
 ## YAML Template
 ---
 
-# password
-password: p@ssw0rd
-
 server:
   applicationConnectors:
     - type: http
@@ -18,4 +15,4 @@ database:
   driverClass: com.mysql.cj.jdbc.Driver
   user: robin
   password: Robin5000
-  url: jdbc:mysql://localhost:3306/ipsen2?serverTimezone=UTC
+  url: jdbc:mysql://localhost:3306/ikrefact?serverTimezone=UTC

@@ -17,300 +17,325 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1000.0" style="-fx-background-color: transparent;" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.CreateDeclarationController">
-   <children>
-      <AnchorPane fx:id="mainpane" layoutX="10.0" layoutY="10.0" minHeight="830.0" minWidth="980.0" prefHeight="830.0" prefWidth="980.0" style="-fx-background-color: #EBEFF0;">
-         <children>
-            <Rectangle arcHeight="2.0" arcWidth="5.0" fill="#56c8ad" height="98.0" layoutX="-4.0" layoutY="18.0" stroke="#56c8ad" strokeType="INSIDE" width="980.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0" />
-            <Pane layoutX="3.0" layoutY="-2.0" prefHeight="82.0" prefWidth="980.0" style="-fx-background-radius: 10; -fx-background-color: #56c8ad;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d656f" height="3.0" layoutY="120.0" stroke="#5d656f" strokeType="INSIDE" width="980.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="117.0" layoutX="515.0" layoutY="141.0" stroke="#5d656f" strokeType="INSIDE" width="284.0" />
-            <VBox alignment="TOP_CENTER" layoutX="64.0" layoutY="68.0" prefHeight="249.0" prefWidth="190.0">
-               <children>
-                  <Text fill="#e7fff8" strokeType="OUTSIDE" strokeWidth="0.0" text="Begin">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="41.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField fx:id="beginZipCode" minHeight="30.0" prefHeight="30.0" prefWidth="190.0" promptText="postcode">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="beginHouseNumber" minHeight="30.0" prefHeight="30.0" prefWidth="190.0" promptText="huisnummer">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="beginStreet" minHeight="30.0" prefHeight="30.0" prefWidth="190.0" promptText="straatnaam">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="beginCity" minHeight="30.0" prefHeight="30.0" promptText="plaatsnaam">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="beginCountry" layoutX="10.0" layoutY="130.0" minHeight="30.0" prefHeight="30.0" promptText="land">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-               </children>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0"
+      prefWidth="1000.0" style="-fx-background-color: transparent;" stylesheets="@../css/style.css"
+      xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="sample.Controllers.CreateDeclarationController">
+   <AnchorPane id="mainpane" fx:id="applicationPane" layoutX="10.0" layoutY="10.0" minHeight="830.0" minWidth="980.0" prefHeight="830.0"
+               prefWidth="980.0" style="-fx-background-color: #EBEFF0;">
+      <Rectangle arcHeight="2.0" arcWidth="5.0" fill="#56c8ad" height="98.0" layoutX="-4.0" layoutY="18.0"
+                 stroke="#56c8ad" strokeType="INSIDE" width="980.0" AnchorPane.leftAnchor="0.0"
+                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="22.0"/>
+      <Pane layoutX="3.0" layoutY="-2.0" prefHeight="82.0" prefWidth="980.0"
+            style="-fx-background-radius: 10; -fx-background-color: #56c8ad;" AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d656f" height="3.0" layoutY="120.0" stroke="#5d656f"
+                 strokeType="INSIDE" width="980.0"/>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="117.0" layoutX="515.0" layoutY="141.0"
+                 stroke="#5d656f" strokeType="INSIDE" width="284.0"/>
+      <VBox alignment="TOP_CENTER" layoutX="64.0" layoutY="68.0" prefHeight="249.0" prefWidth="190.0">
+         <Text fill="#e7fff8" strokeType="OUTSIDE" strokeWidth="0.0" text="Begin">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="41.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="30.0"/>
+            </VBox.margin>
+         </Text>
+         <TextField fx:id="originZipcodeTextfield" minHeight="30.0" prefHeight="30.0" prefWidth="190.0"
+                    promptText="postcode">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="originHousenumberTextfield" minHeight="30.0" prefHeight="30.0" prefWidth="190.0"
+                    promptText="huisnummer">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="originStreetTextfield" minHeight="30.0" prefHeight="30.0" prefWidth="190.0"
+                    promptText="straatnaam">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="originCityTextfield" minHeight="30.0" prefHeight="30.0" promptText="plaatsnaam">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="originCountryTextfield" layoutX="10.0" layoutY="130.0" minHeight="30.0" prefHeight="30.0"
+                    promptText="land">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="289.0" layoutY="67.0" prefHeight="249.0" prefWidth="190.0">
+         <Text fill="#e7fff8" strokeType="OUTSIDE" strokeWidth="0.0" text="Eind">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="41.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="30.0"/>
+            </VBox.margin>
+         </Text>
+         <TextField fx:id="destinationZipcodeTextfield" minHeight="30.0" promptText="postcode">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="destinationHousenumberTextfield" minHeight="30.0" prefHeight="25.0" prefWidth="190.0"
+                    promptText="huisnummer">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="destinationStreetTextfield" minHeight="30.0" prefHeight="25.0" prefWidth="190.0"
+                    promptText="straatnaam">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="destinationCityTextfield" minHeight="30.0" promptText="plaatsnaam">
+            <VBox.margin>
+               <Insets bottom="15.0"/>
+            </VBox.margin>
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+         <TextField fx:id="destinationCountryTextfield" layoutX="10.0" layoutY="130.0" minHeight="30.0" promptText="land">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="13.0"/>
+            </font>
+         </TextField>
+      </VBox>
+      <VBox layoutX="518.0" layoutY="60.0" prefHeight="176.0" prefWidth="284.0">
+         <Text fill="#e7fff8" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometers">
+            <font>
+               <Font name="Arial Rounded MT Bold" size="41.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="30.0" top="8.0"/>
+            </VBox.margin>
+         </Text>
+         <AnchorPane prefHeight="135.0" prefWidth="284.0">
+            <VBox alignment="TOP_RIGHT" layoutY="-1.0" prefHeight="76.0" prefWidth="143.0">
+               <TextField fx:id="declaredKilometersTextfield" minHeight="30.0" promptText="kilometers">
+                  <opaqueInsets>
+                     <Insets/>
+                  </opaqueInsets>
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="13.0"/>
+                  </font>
+               </TextField>
+               <Text fx:id="incorrectKilometers" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="Vul geldige waarde in." visible="false">
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="12.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="2.0"/>
+                  </VBox.margin>
+               </Text>
+               <TextField fx:id="declaredCompensationTextfield" layoutX="10.0" layoutY="10.0" minHeight="30.0"
+                          promptText="vergoeding" text="0.19">
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="13.0"/>
+                  </font>
+               </TextField>
+               <Text fx:id="incorrectCompensation" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="Vul geldige waarde in." visible="false">
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="12.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="-4.0"/>
+                  </VBox.margin>
+               </Text>
+               <Text fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="Totaal">
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="13.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets right="5.0" top="10.0"/>
+                  </VBox.margin>
+               </Text>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="289.0" layoutY="67.0" prefHeight="249.0" prefWidth="190.0">
-               <children>
-                  <Text fill="#e7fff8" strokeType="OUTSIDE" strokeWidth="0.0" text="Eind">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="41.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="30.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField fx:id="endZipCode" minHeight="30.0" promptText="postcode">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="endHouseNumber" minHeight="30.0" prefHeight="25.0" prefWidth="190.0" promptText="huisnummer">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="endStreet" minHeight="30.0" prefHeight="25.0" prefWidth="190.0" promptText="straatnaam">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="endCity" minHeight="30.0" promptText="plaatsnaam">
-                     <VBox.margin>
-                        <Insets bottom="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="endCountry" layoutX="10.0" layoutY="130.0" minHeight="30.0" promptText="land">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="13.0" />
-                     </font>
-                  </TextField>
-               </children>
+            <VBox layoutX="137.0" layoutY="41.0" prefHeight="76.0" prefWidth="37.0">
+               <Text fill="#5d656f" layoutX="25.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="€">
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="13.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets bottom="18.0" left="15.0" top="12.0"/>
+                  </VBox.margin>
+               </Text>
+               <Text fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="€">
+                  <font>
+                     <Font name="Arial Rounded MT Bold" size="13.0"/>
+                  </font>
+                  <VBox.margin>
+                     <Insets left="15.0" top="8.0"/>
+                  </VBox.margin>
+               </Text>
             </VBox>
-            <VBox layoutX="518.0" layoutY="60.0" prefHeight="176.0" prefWidth="284.0">
-               <children>
-                  <Text fill="#e7fff8" strokeType="OUTSIDE" strokeWidth="0.0" text="Kilometers">
-                     <font>
-                        <Font name="Arial Rounded MT Bold" size="41.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="30.0" top="8.0" />
-                     </VBox.margin>
-                  </Text>
-                  <AnchorPane prefHeight="135.0" prefWidth="284.0">
-                     <children>
-                        <VBox alignment="TOP_RIGHT" layoutY="-1.0" prefHeight="76.0" prefWidth="143.0">
-                           <children>
-                              <TextField fx:id="kilometersKilometers" minHeight="30.0" promptText="kilometers">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="13.0" />
-                                 </font>
-                              </TextField>
-                              <Text fx:id="incorrectKilometers" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Vul geldige waarde in." visible="false">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="12.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="2.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <TextField fx:id="kilometersCompensation" layoutX="10.0" layoutY="10.0" minHeight="30.0" promptText="vergoeding" text="0.19">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="13.0" />
-                                 </font>
-                              </TextField>
-                              <Text fx:id="incorrectCompensation" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Vul geldige waarde in." visible="false">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="12.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="-4.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <Text fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="Totaal">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="13.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets right="5.0" top="10.0" />
-                                 </VBox.margin>
-                              </Text>
-                           </children>
-                        </VBox>
-                        <VBox layoutX="137.0" layoutY="41.0" prefHeight="76.0" prefWidth="37.0">
-                           <children>
-                              <Text fill="#5d656f" layoutX="25.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="€">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="13.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets bottom="18.0" left="15.0" top="12.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <Text fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="€">
-                                 <font>
-                                    <Font name="Arial Rounded MT Bold" size="13.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets left="15.0" top="8.0" />
-                                 </VBox.margin>
-                              </Text>
-                           </children>
-                        </VBox>
-                        <VBox alignment="TOP_RIGHT" layoutX="174.0" prefHeight="117.0" prefWidth="110.0">
-                           <children>
-                              <Text fx:id="kilometersTraveled" fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
-                                 <VBox.margin>
-                                    <Insets bottom="22.0" right="15.0" top="3.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <Text fx:id="compensationPerKilometer" fill="#5d656f" layoutX="92.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0,19">
-                                 <VBox.margin>
-                                    <Insets right="15.0" top="12.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <Text fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="x">
-                                 <VBox.margin>
-                                    <Insets right="15.0" />
-                                 </VBox.margin>
-                              </Text>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d656f" height="5.0" stroke="#5d656f" strokeType="INSIDE" width="72.0">
-                                 <VBox.margin>
-                                    <Insets right="15.0" />
-                                 </VBox.margin>
-                              </Rectangle>
-                              <Text fx:id="totalCompensation" fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="0,00">
-                                 <VBox.margin>
-                                    <Insets right="15.0" top="3.0" />
-                                 </VBox.margin>
-                              </Text>
-                           </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-               </children>
+            <VBox alignment="TOP_RIGHT" layoutX="174.0" prefHeight="117.0" prefWidth="110.0">
+               <Text fx:id="kilometersTraveled" fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="0">
+                  <VBox.margin>
+                     <Insets bottom="22.0" right="15.0" top="3.0"/>
+                  </VBox.margin>
+               </Text>
+               <Text fx:id="compensationPerKilometer" fill="#5d656f" layoutX="92.0" layoutY="26.0"
+                     strokeType="OUTSIDE" strokeWidth="0.0" text="0,19">
+                  <VBox.margin>
+                     <Insets right="15.0" top="12.0"/>
+                  </VBox.margin>
+               </Text>
+               <Text fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0" text="x">
+                  <VBox.margin>
+                     <Insets right="15.0"/>
+                  </VBox.margin>
+               </Text>
+               <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5d656f" height="5.0" stroke="#5d656f"
+                          strokeType="INSIDE" width="72.0">
+                  <VBox.margin>
+                     <Insets right="15.0"/>
+                  </VBox.margin>
+               </Rectangle>
+               <Text fx:id="totalCompensation" fill="#5d656f" strokeType="OUTSIDE" strokeWidth="0.0"
+                     text="0,00">
+                  <VBox.margin>
+                     <Insets right="15.0" top="3.0"/>
+                  </VBox.margin>
+               </Text>
             </VBox>
-            <TextArea fx:id="kilometerDescription" layoutX="515.0" layoutY="279.0" prefHeight="76.0" prefWidth="284.0" promptText="omschrijving" wrapText="true">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="13.0" />
-               </font>
-            </TextArea>
-            <DatePicker fx:id="dateDate" layoutX="808.0" layoutY="279.0" prefHeight="33.0" prefWidth="137.0" promptText="Datum " />
-            <Text fx:id="incorrectDate" fill="RED" layoutX="822.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vul een datum in." visible="false" AnchorPane.bottomAnchor="500.0">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="12.0" />
-               </font>
-            </Text>
-            <Button layoutX="806.0" layoutY="323.0" mnemonicParsing="false" onAction="#getTodaysDate" prefHeight="27.0" prefWidth="140.0" style="-fx-background-color: transparent;" text="Pick today's date" AnchorPane.bottomAnchor="477.0">
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <VBox layoutX="793.0" layoutY="135.0" prefHeight="130.0" prefWidth="118.0">
-               <children>
-                  <ComboBox fx:id="kilometersProject" prefHeight="33.0" prefWidth="100.0" promptText="Project">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="15.0" top="5.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="kilometersClient" layoutX="10.0" layoutY="10.0" prefHeight="33.0" prefWidth="100.0" promptText="Klant">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="15.0" />
-                     </VBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="kilometersCar" layoutX="10.0" layoutY="35.0" prefHeight="33.0" prefWidth="100.0" promptText="Auto">
-                     <VBox.margin>
-                        <Insets left="15.0" />
-                     </VBox.margin>
-                  </ComboBox>
-               </children>
-            </VBox>
-            <VBox layoutX="902.0" layoutY="135.0" prefHeight="117.0" prefWidth="35.0">
-               <children>
-                  <Button fx:id="newProjectButton" maxHeight="33.0" maxWidth="33.0" minHeight="33.0" minWidth="33.0" mnemonicParsing="false" onAction="#createNewProject" prefHeight="33.0" prefWidth="33.0" text="+">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="newClientButton" layoutX="10.0" layoutY="16.0" maxHeight="33.0" maxWidth="33.0" minHeight="33.0" minWidth="33.0" mnemonicParsing="false" onAction="#createNewClient" prefHeight="33.0" prefWidth="33.0" text="+">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="newCarButton" layoutX="10.0" layoutY="47.0" maxHeight="33.0" maxWidth="33.0" minHeight="33.0" minWidth="33.0" mnemonicParsing="false" onAction="#createNewCar" prefHeight="33.0" prefWidth="33.0" text="+">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <Button fx:id="saveButton" defaultButton="true" layoutX="391.0" layoutY="756.0" mnemonicParsing="false" onAction="#saveButtonPressed" prefHeight="61.0" prefWidth="228.0" style="-fx-background-color: #56c8ad;" text="Opslaan" textFill="#e5fff8" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="380.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <font>
-                  <Font name="Arial Rounded MT Bold" size="24.0" />
-               </font>
-            </Button>
-            <Button id="crossbutton" fx:id="crossbutton" cancelButton="true" layoutX="876.0" layoutY="729.0" maxHeight="98.0" maxWidth="98.0" minHeight="98.0" minWidth="98.0" mnemonicParsing="false" onAction="#cancelDeclaration" prefHeight="98.0" prefWidth="98.0" style="-fx-background-color: transparent;" stylesheets="@../css/style.css" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
-            <BorderPane fx:id="googleMaps" prefHeight="320.0" prefWidth="900.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="380.0">
-               <center>
-                  <ImageView fx:id="mapImage" fitHeight="320.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-               </center>
-            </BorderPane>
-            <Label fx:id="emptyValues" alignment="CENTER" layoutX="475.0" layoutY="804.0" text="Niet alle velden zijn juist ingevuld." textAlignment="CENTER" textFill="#f80303" visible="false" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0" />
-         </children>
-      </AnchorPane>
-   </children>
+         </AnchorPane>
+      </VBox>
+      <TextArea fx:id="descriptionField" layoutX="515.0" layoutY="279.0" prefHeight="76.0" prefWidth="284.0"
+                promptText="omschrijving" wrapText="true">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="13.0"/>
+         </font>
+      </TextArea>
+      <DatePicker fx:id="dateDate" layoutX="808.0" layoutY="279.0" prefHeight="33.0" prefWidth="137.0"
+                  promptText="Datum "/>
+      <Text fx:id="incorrectDate" fill="RED" layoutX="822.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0"
+            text="Vul een datum in." visible="false" AnchorPane.bottomAnchor="500.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="12.0"/>
+         </font>
+      </Text>
+      <Button layoutX="806.0" layoutY="323.0" mnemonicParsing="false" onAction="#setTodaysDate" prefHeight="27.0"
+              prefWidth="140.0" style="-fx-background-color: transparent;" text="Pick today's date"
+              AnchorPane.bottomAnchor="477.0">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0"/>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+      </Button>
+      <VBox layoutX="793.0" layoutY="135.0" prefHeight="130.0" prefWidth="118.0">
+         <ComboBox fx:id="kilometersProject" prefHeight="33.0" prefWidth="100.0" promptText="Project">
+            <VBox.margin>
+               <Insets bottom="10.0" left="15.0" top="5.0"/>
+            </VBox.margin>
+         </ComboBox>
+         <ComboBox fx:id="kilometersClient" layoutX="10.0" layoutY="10.0" prefHeight="33.0" prefWidth="100.0"
+                   promptText="Klant">
+            <VBox.margin>
+               <Insets bottom="10.0" left="15.0"/>
+            </VBox.margin>
+         </ComboBox>
+         <ComboBox fx:id="kilometersCar" layoutX="10.0" layoutY="35.0" prefHeight="33.0" prefWidth="100.0"
+                   promptText="Auto">
+            <VBox.margin>
+               <Insets left="15.0"/>
+            </VBox.margin>
+         </ComboBox>
+      </VBox>
+      <VBox layoutX="902.0" layoutY="135.0" prefHeight="117.0" prefWidth="35.0">
+         <Button fx:id="newProjectButton" maxHeight="33.0" maxWidth="33.0" minHeight="33.0" minWidth="33.0"
+                 mnemonicParsing="false" onAction="#createNewProject" prefHeight="33.0" prefWidth="33.0" text="+">
+            <font>
+               <Font name="System Bold" size="15.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="5.0"/>
+            </VBox.margin>
+         </Button>
+         <Button fx:id="newClientButton" layoutX="10.0" layoutY="16.0" maxHeight="33.0" maxWidth="33.0"
+                 minHeight="33.0" minWidth="33.0" mnemonicParsing="false" onAction="#createNewClient"
+                 prefHeight="33.0" prefWidth="33.0" text="+">
+            <font>
+               <Font name="System Bold" size="15.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="10.0" left="10.0" right="10.0"/>
+            </VBox.margin>
+         </Button>
+         <Button fx:id="newCarButton" layoutX="10.0" layoutY="47.0" maxHeight="33.0" maxWidth="33.0"
+                 minHeight="33.0" minWidth="33.0" mnemonicParsing="false" onAction="#createNewCar"
+                 prefHeight="33.0" prefWidth="33.0" text="+">
+            <font>
+               <Font name="System Bold" size="15.0"/>
+            </font>
+            <VBox.margin>
+               <Insets bottom="5.0" left="10.0" right="10.0"/>
+            </VBox.margin>
+         </Button>
+      </VBox>
+      <Button fx:id="saveButton" defaultButton="true" layoutX="391.0" layoutY="756.0" mnemonicParsing="false"
+              onAction="#attemptSaveDeclaration" prefHeight="61.0" prefWidth="228.0"
+              style="-fx-background-color: #56c8ad;" text="Opslaan" textFill="#e5fff8" AnchorPane.bottomAnchor="33.0"
+              AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="380.0">
+         <cursor>
+            <Cursor fx:constant="HAND"/>
+         </cursor>
+         <font>
+            <Font name="Arial Rounded MT Bold" size="24.0"/>
+         </font>
+      </Button>
+      <Button id="crossbutton" fx:id="closeButton" cancelButton="true" layoutX="876.0" layoutY="729.0"
+              maxHeight="98.0" maxWidth="98.0" minHeight="98.0" minWidth="98.0" mnemonicParsing="false"
+              onAction="#cancelDeclaration" prefHeight="98.0" prefWidth="98.0"
+              style="-fx-background-color: transparent;" stylesheets="@../css/style.css"
+              AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0"/>
+      <BorderPane fx:id="googleMaps" prefHeight="320.0" prefWidth="900.0" AnchorPane.bottomAnchor="130.0"
+                  AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="380.0">
+         <center>
+            <ImageView fx:id="mapImage" fitHeight="320.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true"
+                       BorderPane.alignment="CENTER"/>
+         </center>
+      </BorderPane>
+      <Label fx:id="emptyValues" alignment="CENTER" layoutX="475.0" layoutY="804.0"
+             text="Niet alle velden zijn juist ingevuld." textAlignment="CENTER" textFill="#f80303" visible="false"
+             AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="300.0"/>
+   </AnchorPane>
 </Pane>

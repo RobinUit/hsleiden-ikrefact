@@ -1,91 +1,96 @@
 package sample.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 import sample.Models.Declaration;
 import sample.Models.User;
 import sample.Services.HTTPRequestHandler;
+
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
-    private AppController appController = new AppController();
+
+    @FXML
+    private AnchorPane applicationPane;
+    @FXML
+    public Label totalDeclarationLabel, compensationLabel, totalKilometersLabel;
+    @FXML
+    public Button closeApplicationButton, minimizeApplicationButton, logoutButton, dashboardButton, profileButton, declarationButton, newDeclarationButton;
+
     private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
+    private AppController appController = new AppController();
 
-    @FXML
-    public Label totalDeclarationLabel, compensationLabel, totalKilometers;
-
-    @FXML
-    public Button closeButton, hideButton, logoutButton;
-
-    @FXML
-    public void openDeclarations(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Declaration", node, "inherit");
-    }
-
-    @FXML
-    public void reloadDashboard(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Dashboard", node, "inherit");
-    }
-
-    @FXML
-    public void openProfile(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Profile", node, "inherit");
-    }
-
-    @FXML
-    public void openCreateDeclaration(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("CreateDeclaration", node, "inherit");
-    }
+    private double totalKilometerCompensation = 0;
+    private double totalKilometers = 0;
+    private Declaration[] declarations = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DecimalFormat df = new DecimalFormat("###0.00");
+        loadDashboard();
+    }
+
+    @FXML
+    public void loadDashboard() {
 
         try {
-            Declaration[] d = httpRequestHandler.getDeclarationsByID("/declaration/getDeclarationsByOwnerID/" + User.getUserID());
-            double money = 0;
-            double km = 0;
-            for (Declaration declaration : d) {
-                money += declaration.getDecKilometers() * declaration.getDecDeclaration();
-                km += declaration.getDecKilometers();
+            declarations = httpRequestHandler.getDeclarationsByID("/declaration/getDeclarationsByOwnerID/" + User.getUserID());
+
+            for (Declaration declaration : declarations) {
+                totalKilometerCompensation += declaration.getDeclaredKilometers() * declaration.getDeclaredCompensation();
+                totalKilometers += declaration.getDeclaredKilometers();
             }
-            totalDeclarationLabel.setText(Integer.toString(d.length));
-            compensationLabel.setText("€ " + df.format(money));
-            totalKilometers.setText(km + " Km");
-        }catch(Exception e ){
-            totalDeclarationLabel.setText("0");
-            compensationLabel.setText("€0.00");
-            totalKilometers.setText("0");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            setDashboardLabelValues();
         }
     }
 
-    @FXML
-    public void close() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+    private void setDashboardLabelValues() {
+        DecimalFormat decimalFormat = new DecimalFormat("###0.00");
+
+        compensationLabel.setText("€ " + decimalFormat.format(totalKilometerCompensation));
+        totalKilometersLabel.setText(totalKilometers + " Km");
+        if (declarations != null) {
+            totalDeclarationLabel.setText(Integer.toString(declarations.length));
+            return;
+        }
+        totalDeclarationLabel.setText("0");
     }
 
     @FXML
-    public void hide() {
-        Stage stage = (Stage) hideButton.getScene().getWindow();
-        stage.setIconified(true);
+    public void openDeclarations() {
+        appController.changeView("Declaration", applicationPane, "inherit");
     }
 
     @FXML
-    public void logout(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Login", node, "center");
+    public void openProfile() {
+        appController.changeView("Profile", applicationPane, "inherit");
+    }
+
+    @FXML
+    public void openCreateDeclaration() {
+        appController.changeView("CreateDeclaration", applicationPane, "inherit");
+    }
+
+    @FXML
+    public void logout() {
+        appController.logout(applicationPane);
+    }
+
+    @FXML
+    public void minimizeApplication() {
+        appController.minimizeApplication(applicationPane);
+    }
+
+    @FXML
+    public void closeApplication() {
+        appController.closeApplication(applicationPane);
     }
 }
 

@@ -6,96 +6,53 @@ import java.security.Principal;
 
 @Entity
 @Table(name = "car")
-public class Car implements Principal {
+public class Car {
 
     @Id
     @MapKeyColumn
-    private String licencePlate;
+    private String licensePlate;
     private int ownerID;
-    private String carName;
-    private String carBrand;
-    private String carType;
-    private String carColor;
+    private String name;
+    private String brand;
+    private String type;
+    private String color;
     private String fuelType;
 
-    public Car(String licencePlate, String carName, String carBrand, String carType, String carColor, String fuelType){
-        this.licencePlate = licencePlate;
-        this.carName = carName;
-        this.carBrand = carBrand;
-        this.carType = carType;
-        this.carColor = carColor;
-        this.fuelType = fuelType;
-    }
-
-    //deze constructor heeft wel ownerID bij zich.
-    public Car(String licencePlate,int ownerID, String carName, String carBrand, String carType, String carColor, String fuelType){
-        this.licencePlate = licencePlate;
+    public Car(String licensePlate,int ownerID, String name, String brand, String type, String color, String fuelType){
+        this.licensePlate = licensePlate;
         this.ownerID = ownerID;
-        this.carName = carName;
-        this.carBrand = carBrand;
-        this.carType = carType;
-        this.carColor = carColor;
+        this.name = name;
+        this.brand = brand;
+        this.type = type;
+        this.color = color;
         this.fuelType = fuelType;
     }
 
     public String getLicensePlate() {
-        return licencePlate;
-    }
-    public int getOwnerID(){return ownerID;}
-    public void setOwnerID(int ownerID){
-        this.ownerID = ownerID;
+        return licensePlate;
     }
 
-    public String getLicencePlate() {
-        return licencePlate;
+    public int getOwnerID() {
+        return ownerID;
     }
 
-    public void setLicencePlate(String licencePlate) {
-        this.licencePlate = licencePlate;
+    public String getName() {
+        return name;
     }
 
-    public String getCarName() {
-        return carName;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setCarName(String carName) {
-        this.carName = carName;
+    public String getType() {
+        return type;
     }
 
-    public String getCarBrand() {
-        return carBrand;
-    }
-
-    public void setCarBrand(String carBrand) {
-        this.carBrand = carBrand;
-    }
-
-    public String getCarType() {
-        return carType;
-    }
-
-    public void setCarType(String carType) {
-        this.carType = carType;
-    }
-
-    public String getCarColor() {
-        return carColor;
-    }
-
-    public void setCarColor(String carColor) {
-        this.carColor = carColor;
+    public String getColor() {
+        return color;
     }
 
     public String getFuelType() {
         return fuelType;
-    }
-
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    @Override
-    public String getName() {
-        return carName;
     }
 }

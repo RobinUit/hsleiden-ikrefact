@@ -1,71 +1,104 @@
 package sample.Controllers.Popups;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import sample.Models.Car;
 import sample.Models.User;
 import sample.Services.HTTPRequestHandler;
 import sample.Utility.ActiveCar;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CreateCarPopupController implements Initializable {
 
-    private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
-
     @FXML
-    private Text titelPopup;
-
+    private AnchorPane popupPane;
+    @FXML
+    private Button closeButton, saveButton;
+    @FXML
+    private Text titlePopup;
     @FXML
     private TextField nameField, licenseField, brandField, typeField, colorField, fuelTypeField;
 
-    @FXML
-    void close(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    void save(ActionEvent event) throws Exception {
-        if(licenseField.getText().length()<9){
-            String licensePlate = licenseField.getText();
-            int ownerID = User.getUserID();
-            String name =  nameField.getText();
-            String merk = brandField.getText();
-            String type = typeField.getText();
-            String color = colorField.getText();
-            String fuelType = fuelTypeField.getText();
-
-            Car car = new Car(licensePlate,ownerID, name, merk, type, color, fuelType);
-            httpRequestHandler.postHandler("/car/create", car);
-            //close
-            Node node = (Node)event.getSource();
-            Stage stage = (Stage)node.getScene().getWindow();
-            stage.close();
-        }else{
-            licenseField.setText("Onjuist kenteken.");
-        }
-    }
-
+    private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
+    private PopupController popupController = new PopupController();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if(ActiveCar.getAuto()!=null){
-            titelPopup.setText("Auto aanpassen");
-            Car localCar = ActiveCar.getAuto();
-            licenseField.setText(localCar.getLicencePlate());
-            licenseField.setDisable(true); // //toevoegen?
-            nameField.setText(localCar.getCarName());
-            brandField.setText(localCar.getCarBrand());
-            typeField.setText(localCar.getCarType());
-            colorField.setText(localCar.getCarColor());
-            fuelTypeField.setText(localCar.getFuelType());
+        if (ActiveCar.getActiveCar() != null) {
+            loadActiveCar();
         }
     }
+
+    private void loadActiveCar() {
+        Car activeCar = ActiveCar.getActiveCar();
+
+        titlePopup.setText("Auto aanpassen");
+        licenseField.setText(activeCar.getLicensePlate());
+        nameField.setText(activeCar.getName());
+        brandField.setText(activeCar.getBrand());
+        typeField.setText(activeCar.getType());
+        colorField.setText(activeCar.getColor());
+        fuelTypeField.setText(activeCar.getFuelType());
+
+        licenseField.setDisable(true);
+    }
+
+    @FXML
+    void saveCar() {
+
+        if (!fieldsAreCorrect()) {
+            return;
+        }
+
+        try {
+            Car car = createCar();
+            httpRequestHandler.postHandler("/car/create", car);
+            closePopup();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean fieldsAreCorrect() {
+        int LENGHT_LICENSEPLATE = 8;
+
+        if (licenseField.getText().length() != LENGHT_LICENSEPLATE) {
+            licenseField.setText("Onjuist kenteken.");
+            return false;
+        } else if (
+                licenseField.getText().trim().isEmpty() ||
+                        nameField.getText().trim().isEmpty() ||
+                        brandField.getText().trim().isEmpty() ||
+                        typeField.getText().trim().isEmpty() ||
+                        colorField.getText().trim().isEmpty() ||
+                        fuelTypeField.getText().trim().isEmpty()
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    private Car createCar() {
+        return new Car(
+                licenseField.getText(),
+                User.getUserID(),
+                nameField.getText(),
+                brandField.getText(),
+                typeField.getText(),
+                colorField.getText(),
+                fuelTypeField.getText()
+        );
+    }
+
+    @FXML
+    void closePopup() {
+        popupController.closePopup(popupPane);
+    }
+
 }

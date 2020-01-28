@@ -5,7 +5,7 @@ import java.security.Principal;
 
 @Entity
 @Table(name = "declaration")
-public class Declaration implements Principal {
+public class Declaration {
 
     @Id
     @MapKeyColumn
@@ -13,191 +13,145 @@ public class Declaration implements Principal {
     private int declarationID;
 
     private int ownerID;
-    private String decDesc;
-    private int decKilometers;
-    private double decDeclaration;
-    //Begin adres
-    private String decBeginPostal;
-    private String decBeginHouseNumber;
-    private String decBeginStreet;
-    private String decBeginCity;
-    private String decBeginCountry;
-    //Eind adres
-    private String decEndPostal;
-    private String decEndHouseNumber;
-    private String decEndStreet;
-    private String decEndCity;
-    private String decEndCountry;
 
-    public Declaration(String decDesc, int decKilometers, double decDeclaration, String decBeginPostal, String decBeginHouseNumber, String decBeginStreet, String decBeginCity, String decBeginCountry, String decEndPostal, String decEndHouseNumber, String decEndStreet, String decEndCity, String decEndCountry) {
-        this.decDesc = decDesc;
-        this.decKilometers = decKilometers;
-        this.decDeclaration = decDeclaration;
-        this.decBeginPostal = decBeginPostal;
-        this.decBeginHouseNumber = decBeginHouseNumber;
-        this.decBeginStreet = decBeginStreet;
-        this.decBeginCity = decBeginCity;
-        this.decBeginCountry = decBeginCountry;
-        this.decEndPostal = decEndPostal;
-        this.decEndHouseNumber = decEndHouseNumber;
-        this.decEndStreet = decEndStreet;
-        this.decEndCity = decEndCity;
-        this.decEndCountry = decEndCountry;
-    }
+    private String description;
+    private double declaredKilometers;
+    private double declaredCompensation;
 
-    public Declaration(int ownerID, String decDesc, int decKilometers, double decDeclaration, String decBeginPostal, String decBeginHouseNumber, String decBeginStreet, String decBeginCity, String decBeginCountry, String decEndPostal, String decEndHouseNumber, String decEndStreet, String decEndCity, String decEndCountry) {
+    private String originZipcode;
+    private String originHouseNumber;
+    private String originStreet;
+    private String originCity;
+    private String originCountry;
+
+    private String destinationZipcode;
+    private String destinationHouseNumber;
+    private String destinationStreet;
+    private String destinationCity;
+    private String destinationCountry;
+
+    public Declaration(
+            int ownerID,
+            String description,
+            double declaredKilometers,
+            double declaredCompensation,
+            String originZipcode,
+            String originHouseNumber,
+            String originStreet,
+            String originCity,
+            String originCountry,
+            String destinationZipcode,
+            String destinationHouseNumber,
+            String destinationStreet,
+            String destinationCity,
+            String destinationCountry) {
         this.ownerID = ownerID;
-        this.decDesc = decDesc;
-        this.decKilometers = decKilometers;
-        this.decDeclaration = decDeclaration;
-        this.decBeginPostal = decBeginPostal;
-        this.decBeginHouseNumber = decBeginHouseNumber;
-        this.decBeginStreet = decBeginStreet;
-        this.decBeginCity = decBeginCity;
-        this.decBeginCountry = decBeginCountry;
-        this.decEndPostal = decEndPostal;
-        this.decEndHouseNumber = decEndHouseNumber;
-        this.decEndStreet = decEndStreet;
-        this.decEndCity = decEndCity;
-        this.decEndCountry = decEndCountry;
+        this.description = description;
+        this.declaredKilometers = declaredKilometers;
+        this.declaredCompensation = declaredCompensation;
+        this.originZipcode = originZipcode;
+        this.originHouseNumber = originHouseNumber;
+        this.originStreet = originStreet;
+        this.originCity = originCity;
+        this.originCountry = originCountry;
+        this.destinationZipcode = destinationZipcode;
+        this.destinationHouseNumber = destinationHouseNumber;
+        this.destinationStreet = destinationStreet;
+        this.destinationCity = destinationCity;
+        this.destinationCountry = destinationCountry;
     }
 
-    public Declaration(int declarationID, int ownerID, String decDesc, int decKilometers, double decDeclaration, String decBeginPostal, String decBeginHouseNumber, String decBeginStreet, String decBeginCity, String decBeginCountry, String decEndPostal, String decEndHouseNumber, String decEndStreet, String decEndCity, String decEndCountry) {
+    public Declaration(
+            int declarationID,
+            int ownerID,
+            String description,
+            double declaredKilometers,
+            double declaredCompensation,
+            String originZipcode,
+            String originHouseNumber,
+            String originStreet,
+            String originCity,
+            String originCountry,
+            String destinationZipcode,
+            String destinationHouseNumber,
+            String destinationStreet,
+            String destinationCity,
+            String destinationCountry) {
         this.declarationID = declarationID;
         this.ownerID = ownerID;
-        this.decDesc = decDesc;
-        this.decKilometers = decKilometers;
-        this.decDeclaration = decDeclaration;
-        this.decBeginPostal = decBeginPostal;
-        this.decBeginHouseNumber = decBeginHouseNumber;
-        this.decBeginStreet = decBeginStreet;
-        this.decBeginCity = decBeginCity;
-        this.decBeginCountry = decBeginCountry;
-        this.decEndPostal = decEndPostal;
-        this.decEndHouseNumber = decEndHouseNumber;
-        this.decEndStreet = decEndStreet;
-        this.decEndCity = decEndCity;
-        this.decEndCountry = decEndCountry;
+        this.description = description;
+        this.declaredKilometers = declaredKilometers;
+        this.declaredCompensation = declaredCompensation;
+        this.originZipcode = originZipcode;
+        this.originHouseNumber = originHouseNumber;
+        this.originStreet = originStreet;
+        this.originCity = originCity;
+        this.originCountry = originCountry;
+        this.destinationZipcode = destinationZipcode;
+        this.destinationHouseNumber = destinationHouseNumber;
+        this.destinationStreet = destinationStreet;
+        this.destinationCity = destinationCity;
+        this.destinationCountry = destinationCountry;
     }
+
 
     public int getDeclarationID() {
         return declarationID;
     }
-    public int getOwnerID(){return ownerID;}
-    public void setOwnerID(int ownerID){
-        this.ownerID = ownerID;
+
+    public int getOwnerID() {
+        return ownerID;
     }
 
-    public void setDeclarationID(int declarationID) {
-        this.declarationID = declarationID;
+    public String getDescription() {
+        return description;
     }
 
-    public String getDecDesc() {
-        return decDesc;
+    public double getDeclaredKilometers() {
+        return declaredKilometers;
     }
 
-    public void setDecDesc(String decDesc) {
-        this.decDesc = decDesc;
+    public double getDeclaredCompensation() {
+        return declaredCompensation;
     }
 
-    public int getDecKilometers() {
-        return decKilometers;
+    public String getOriginZipcode() {
+        return originZipcode;
     }
 
-    public void setDecKilometers(int decKilometers) {
-        this.decKilometers = decKilometers;
+    public String getOriginHouseNumber() {
+        return originHouseNumber;
     }
 
-    public double getDecDeclaration() {
-        return decDeclaration;
+    public String getOriginStreet() {
+        return originStreet;
     }
 
-    public void setDecDeclaration(double decDeclaration) {
-        this.decDeclaration = decDeclaration;
+    public String getOriginCity() {
+        return originCity;
     }
 
-    public String getDecBeginPostal() {
-        return decBeginPostal;
+    public String getOriginCountry() {
+        return originCountry;
     }
 
-    public void setDecBeginPostal(String decBeginPostal) {
-        this.decBeginPostal = decBeginPostal;
+    public String getDestinationZipcode() {
+        return destinationZipcode;
     }
 
-    public String getDecBeginHouseNumber() {
-        return decBeginHouseNumber;
+    public String getDestinationHouseNumber() {
+        return destinationHouseNumber;
     }
 
-    public void setDecBeginHouseNumber(String decBeginHouseNumber) {
-        this.decBeginHouseNumber = decBeginHouseNumber;
+    public String getDestinationStreet() {
+        return destinationStreet;
     }
 
-    public String getDecBeginStreet() {
-        return decBeginStreet;
+    public String getDestinationCity() {
+        return destinationCity;
     }
 
-    public void setDecBeginStreet(String decBeginStreet) {
-        this.decBeginStreet = decBeginStreet;
-    }
-
-    public String getDecBeginCity() {
-        return decBeginCity;
-    }
-
-    public void setDecBeginCity(String decBeginCity) {
-        this.decBeginCity = decBeginCity;
-    }
-
-    public String getDecBeginCountry() {
-        return decBeginCountry;
-    }
-
-    public void setDecBeginCountry(String decBeginCountry) {
-        this.decBeginCountry = decBeginCountry;
-    }
-
-    public String getDecEndPostal() {
-        return decEndPostal;
-    }
-
-    public void setDecEndPostal(String decEndPostal) {
-        this.decEndPostal = decEndPostal;
-    }
-
-    public String getDecEndHouseNumber() {
-        return decEndHouseNumber;
-    }
-
-    public void setDecEndHouseNumber(String decEndHouseNumber) {
-        this.decEndHouseNumber = decEndHouseNumber;
-    }
-
-    public String getDecEndStreet() {
-        return decEndStreet;
-    }
-
-    public void setDecEndStreet(String decEndStreet) {
-        this.decEndStreet = decEndStreet;
-    }
-
-    public String getDecEndCity() {
-        return decEndCity;
-    }
-
-    public void setDecEndCity(String decEndCity) {
-        this.decEndCity = decEndCity;
-    }
-
-    public String getDecEndCountry() {
-        return decEndCountry;
-    }
-
-    public void setDecEndCountry(String decEndCountry) {
-        this.decEndCountry = decEndCountry;
-    }
-
-    @Override
-    public String getName() {
-        return decBeginPostal;
+    public String getDestinationCountry() {
+        return destinationCountry;
     }
 }

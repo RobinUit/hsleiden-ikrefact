@@ -2,9 +2,9 @@ package sample.Controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -13,26 +13,69 @@ import java.io.IOException;
 
 class AppController {
 
-    void changeView(String pane, Node node, String position){
-        try {
-            Parent newView = FXMLLoader.load(getClass().getResource("/FXML/" + pane + "View.fxml"));
-            Scene newScene = new Scene(newView);
-            newScene.setFill(Color.TRANSPARENT);
-            Stage stage = (Stage) node.getScene().getWindow();
-            WindowStyle.allowDrag(newView, stage);
-            stage.setScene(newScene);
+    private AnchorPane applicationPane;
+    private Parent applicationView;
+    private Scene applicationScene;
+    private Stage applicationStage;
 
-            if (position.equals("center")) {
-                centerStage(stage);
-            }
+    void changeView(String viewName, AnchorPane applicationPane, String position){
+        this.applicationPane = applicationPane;
+
+        getStage();
+        setupView(viewName);
+        setupScene();
+        setupStage(position);
+    }
+
+    private void setupView(String viewName) {
+        try {
+            applicationView = FXMLLoader.load(getClass().getResource("/FXML/" + viewName + "View.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void centerStage(Stage stage) {
+    private void setupScene() {
+        applicationScene = new Scene(applicationView);
+        applicationScene.setFill(Color.TRANSPARENT);
+    }
+
+    private void setupStage(String position) {
+        WindowStyle windowStyle = new WindowStyle();
+
+        windowStyle.enableStageDrag(applicationView, applicationStage);
+
+        applicationStage.setScene(applicationScene);
+
+        if (position.equals("center")) {
+            centerStage();
+        }
+    }
+
+    private void centerStage() {
+        int HALF_THE_SCREEN = 2;
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
-        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 4);
+        applicationStage.setX((primScreenBounds.getWidth() - applicationStage.getWidth()) / HALF_THE_SCREEN);
+        applicationStage.setY((primScreenBounds.getHeight() - applicationStage.getHeight()) / HALF_THE_SCREEN);
+    }
+
+    void logout(AnchorPane applicationPane) {
+        changeView("Login", applicationPane, "center");
+    }
+
+    void closeApplication(AnchorPane applicationPane) {
+        this.applicationPane = applicationPane;
+        getStage();
+        applicationStage.close();
+    }
+
+    void minimizeApplication(AnchorPane applicationPane) {
+        this.applicationPane = applicationPane;
+        getStage();
+        applicationStage.setIconified(true);
+    }
+
+    private void getStage() {
+        this.applicationStage = (Stage) applicationPane.getScene().getWindow();
     }
 }

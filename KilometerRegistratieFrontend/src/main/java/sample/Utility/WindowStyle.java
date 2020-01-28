@@ -7,23 +7,49 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class WindowStyle {
-    private static final Rectangle2D SCREEN_BOUNDS= Screen.getPrimary()
-            .getVisualBounds();
-    private static double[] offset_XY;
 
-    public static void allowDrag(Parent root, Stage stage) {
-        root.setOnMousePressed((MouseEvent p) -> offset_XY= new double[]{p.getSceneX(), p.getSceneY()});
+    private static final Rectangle2D screenSize =
+            Screen.getPrimary().getVisualBounds();
 
-        root.setOnMouseDragged((MouseEvent d) -> {
-            //Ensures the stage is not dragged past the taskbar
-            if (d.getScreenY()<(SCREEN_BOUNDS.getMaxY()-20))
-                stage.setY(d.getScreenY() - offset_XY[1]);
-            stage.setX(d.getScreenX() - offset_XY[0]);
-        });
+    private double[] mouseOffsetXY;
+    private Parent root;
+    private Stage currentStage;
 
-        root.setOnMouseReleased((MouseEvent r)-> {
-            //Ensures the stage is not dragged past top of screen
-            if (stage.getY()<0.0) stage.setY(0.0);
-        });
+    public void enableStageDrag(Parent root, Stage currentStage) {
+        this.root = root;
+        this.currentStage = currentStage;
+
+        handleMouseEvents();
+    }
+
+    private void handleMouseEvents() {
+        root.setOnMousePressed(this::getMouseOffset);
+        root.setOnMouseReleased(this::preventStageReleasedPastTop);
+        root.setOnMouseDragged(this::moveStage);
+    }
+
+    private void getMouseOffset(MouseEvent mousePressed) {
+        mouseOffsetXY = new double[] {
+                mousePressed.getSceneX(),
+                mousePressed.getSceneY()
+        };
+    }
+
+    private void preventStageReleasedPastTop(MouseEvent mouseReleased) {
+        if (currentStage.getY()<0.0) {
+            currentStage.setY(0.0);
+        }
+    }
+
+    private void moveStage(MouseEvent mouseDragged) {
+        preventStageDraggedPastTaskbar(mouseDragged);
+
+        currentStage.setX(mouseDragged.getScreenX() - mouseOffsetXY[0]);
+    }
+
+    private void preventStageDraggedPastTaskbar(MouseEvent mouseDragged) {
+        if (mouseDragged.getScreenY()<(screenSize.getMaxY()-20)) {
+            currentStage.setY(mouseDragged.getScreenY() - mouseOffsetXY[1]);
+        }
     }
 }

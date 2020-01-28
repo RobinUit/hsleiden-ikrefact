@@ -6,10 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ClientJSON {
         @XmlElement public int ownerID;
-        @XmlElement public String clientName;
-        @XmlElement public String clientPostalCode;
-        @XmlElement public int clientHouseNumber;
-        @XmlElement public String clientCity;
-        @XmlElement public String clientCountry;
+        @XmlElement public String name;
+        @XmlElement public String zipcode;
+        @XmlElement public int housenumber;
+        @XmlElement public String street;
+        @XmlElement public String city;
+        @XmlElement public String country;
     }
 

@@ -2,64 +2,107 @@ package sample.Services;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
 public class GoogleMapsHandler {
 
-    private String API_KEY = "AIzaSyCG2jL_rZO0BnhsjSFxvKq39Okq2GZNf98";
+    private Response response;
+    private String requestUrl;
+    private String parameters;
+    private WritableImage map = null;
+    private String[][] originDestinationDistance;
+    private JSONObject responseInJSONObject;
+    private String[] originAddress;
+    private String[] destinationAddress;
+    private String[] distanceBetween;
 
-    public String[][] calculate(String origin , String destination) throws IOException {
-        OkHttpClient client = new OkHttpClient();
-        String url="https://maps.googleapis.com/maps/api/distancematrix/json?origins="+origin+"&destinations="+destination+"&key="+ API_KEY;
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
 
-        Response response = client.newCall(request).execute();
+    public String[][] getOriginDestinationAddressAndDistanceBetween(String origin, String destination) {
+        parameters =
+                "origins=" + origin +
+                        "&destinations=" + destination;
 
+        buildRequestUrl("distancematrix/json", parameters);
+
+        buildAndSendRequest(requestUrl);
+
+        handleResponse();
+
+        return originDestinationDistance;
+    }
+
+    private void buildRequestUrl(String apiName, String parameters) {
+        String API_KEY = "AIzaSyCG2jL_rZO0BnhsjSFxvKq39Okq2GZNf98";
+        requestUrl = "https://maps.googleapis.com/maps/api/" +
+                apiName +
+                "?" + parameters +
+                "&key=" + API_KEY +
+                "&language=nl";
+    }
+
+    private void buildAndSendRequest(String requestUrl) {
         try {
-            assert response.body() != null;
-            JSONObject jsonobj = new JSONObject(response.body().string());
-
-            //begin address
-            JSONArray begin=(JSONArray)jsonobj.get("origin_addresses");
-            String[] originAddress = toVariables((String) begin.get(0));
-
-            //end address
-            JSONArray end=(JSONArray)jsonobj.get("destination_addresses");
-            String[] destinationAddress = toVariables((String) end.get(0));
-
-            String[] distance;
-
-            //distance
-            try {
-                JSONArray dist = (JSONArray) jsonobj.get("rows");
-                JSONObject obj2 = (JSONObject) dist.get(0);
-                JSONArray disting = (JSONArray) obj2.get("elements");
-                JSONObject obj3 = (JSONObject) disting.get(0);
-                JSONObject obj4 = (JSONObject) obj3.get("distance");
-                String kmplustext = (String) obj4.get("text");
-                String km = kmplustext.split(" ")[0];
-                distance = new String[] {km};
-
-            } catch (Exception e) {
-                return null;
-            }
-
-            return new String[][] {originAddress, destinationAddress, distance};
-        }
-        catch(Exception e) {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(requestUrl)
+                    .build();
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    private void handleResponse() {
+        convertResponseToJSON();
+
+        extractOriginAddress();
+        extractDestinationAddress();
+        extractDistanceBetween();
+
+        originDestinationDistance = new String[][]{
+                originAddress, destinationAddress, distanceBetween
+        };
+    }
+
+    private void convertResponseToJSON() {
+        try {
+            assert response.body() != null;
+            responseInJSONObject = new JSONObject(response.body().string());
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void extractOriginAddress() {
+        JSONArray originAddressJSONArray = (JSONArray) responseInJSONObject.get("origin_addresses");
+        originAddress = toVariables((String) originAddressJSONArray.get(0));
+    }
+
+    private void extractDestinationAddress() {
+        JSONArray destinationAddressJSONArray = (JSONArray) responseInJSONObject.get("destination_addresses");
+        destinationAddress = toVariables((String) destinationAddressJSONArray.get(0));
+    }
+
+    private void extractDistanceBetween() {
+        JSONArray dist = (JSONArray) responseInJSONObject.get("rows");
+        JSONObject obj2 = (JSONObject) dist.get(0);
+        JSONArray disting = (JSONArray) obj2.get("elements");
+        JSONObject obj3 = (JSONObject) disting.get(0);
+        JSONObject obj4 = (JSONObject) obj3.get("distance");
+        String kmplustext = (String) obj4.get("text");
+        String km = kmplustext.split(" ")[0];
+
+        distanceBetween = new String[]{km};
     }
 
     private String[] toVariables(String address) {
@@ -93,32 +136,42 @@ public class GoogleMapsHandler {
         }
     }
 
-    public Image maps(String origin, String destination) {
-        try {
-            BufferedImage image = ImageIO.read(new URL(
-                    "https://maps.googleapis.com/maps/api/staticmap?size=900x320&maptype=roadmap" +
-                    "&markers=size:mid%7Ccolor:red%7C" +
-                            origin.replaceAll(" ", "") + "%7C" +
-                            destination.replaceAll(" ", "")
-                            + "&key=" + API_KEY
-                            + "&language=nl"));
-            return SwingFXUtils.toFXImage(image, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Image getRouteMap(String originAddress, String destinationAddress) {
+        parameters =
+                "size=900x320&maptype=roadmap" +
+                        "&markers=size:mid%7Ccolor:red%7C" +
+                        originAddress.replaceAll(" ", "") + "%7C" +
+                        destinationAddress.replaceAll(" ", "");
+
+        handleRequest();
+
+        return map;
     }
 
-    public Image defaultMap() {
+    public Image getDefaultMap() {
+        parameters =
+                "center=Netherlands" +
+                        "&zoom=6" +
+                        "&size=900x320" +
+                        "&maptype=roadmap";
+
+        handleRequest();
+
+        return map;
+    }
+
+    private void handleRequest() {
+        buildRequestUrl("staticmap", parameters);
+        getImageFromUrl();
+    }
+
+    private void getImageFromUrl() {
         try {
-            BufferedImage image = ImageIO.read(new URL(
-                    "https://maps.googleapis.com/maps/api/staticmap?center=Netherlands&zoom=6&size=900x320&maptype=roadmap"
-                            + "&key=" + API_KEY
-                            + "&language=nl"));
-            return SwingFXUtils.toFXImage(image, null);
-        } catch (Exception e) {
+            map = SwingFXUtils.toFXImage(
+                    ImageIO.read(
+                            new URL(requestUrl)), null);
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

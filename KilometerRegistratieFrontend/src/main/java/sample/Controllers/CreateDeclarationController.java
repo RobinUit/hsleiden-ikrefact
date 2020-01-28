@@ -1,35 +1,31 @@
 package sample.Controllers;
 
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import sample.Controllers.Popups.PopupController;
-import java.net.URL;
-import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import sample.Models.Declaration;
 import sample.Models.User;
 import sample.Services.GoogleMapsHandler;
 import sample.Services.HTTPRequestHandler;
 
+import java.net.URL;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.ResourceBundle;
+
 public class CreateDeclarationController implements Initializable {
 
-    private AppController appController = new AppController();
-    private PopupController popupController = new PopupController();
-    private GoogleMapsHandler googleMapsHandler = new GoogleMapsHandler();
-    private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
-
     @FXML
-    public TextField beginZipCode, beginHouseNumber, beginStreet, beginCity, beginCountry, endZipCode, endHouseNumber, endStreet, endCity, endCountry, kilometersKilometers, kilometersCompensation;
+    private AnchorPane applicationPane;
+    @FXML
+    public TextField originZipcodeTextfield, originHousenumberTextfield, originStreetTextfield, originCityTextfield, originCountryTextfield, destinationZipcodeTextfield, destinationHousenumberTextfield, destinationStreetTextfield, destinationCityTextfield, destinationCountryTextfield, declaredKilometersTextfield, declaredCompensationTextfield;
     @FXML
     public DatePicker dateDate;
     @FXML
@@ -39,207 +35,283 @@ public class CreateDeclarationController implements Initializable {
     @FXML
     public ImageView mapImage;
     @FXML
-    public Button closeButton;
+    public Button closeButton, newProjectButton, newClientButton, newCarButton, saveButton;
     @FXML
-    public TextArea kilometerDescription;
+    public TextArea descriptionField;
     @FXML
     public Label emptyValues;
+    @FXML
+    private ComboBox kilometersProject, kilometersClient, kilometersCar;
 
-    private void checkAddress() {
-        String beginH = beginHouseNumber.getText();
-        String beginS = beginStreet.getText();
-        String beginZ = beginZipCode.getText();
-        String endH = endHouseNumber.getText();
-        String endS = endStreet.getText();
-        String endZ = endZipCode.getText();
-        if (beginH.trim().isEmpty() || beginS.trim().isEmpty() || beginZ.trim().isEmpty() || endH.trim().isEmpty() || endS.trim().isEmpty() || endZ.trim().isEmpty()) {
-            emptyValues.setVisible(true);
+    private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
+    private GoogleMapsHandler googleMapsHandler = new GoogleMapsHandler();
+    private AppController appController = new AppController();
+    private PopupController popupController = new PopupController();
+
+    private String originZipcode;
+    private String originHousenumber;
+    private String originStreet;
+    private String originCity;
+    private String originCountry;
+    private String destinationZipcode;
+    private String destinationHousenumber;
+    private String destinationStreet;
+    private String destinationCity;
+    private String destinationCountry;
+    private String declaredKilometers;
+    private String declaredCompensation;
+    private String description;
+
+    private String targetedField;
+    private Text errorField;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setupEventListeners();
+        disableTextfields(true);
+        setTodaysDate();
+        mapImage.setImage(googleMapsHandler.getDefaultMap());
+    }
+
+    private void setupEventListeners() {
+        textfieldFocusedEventListener(originHousenumberTextfield, "checkAddress");
+        textfieldFocusedEventListener(originZipcodeTextfield, "checkAddress");
+        textfieldFocusedEventListener(originStreetTextfield, "checkAddress");
+        textfieldFocusedEventListener(destinationHousenumberTextfield, "checkAddress");
+        textfieldFocusedEventListener(destinationZipcodeTextfield, "checkAddress");
+        textfieldFocusedEventListener(destinationStreetTextfield, "checkAddress");
+        textfieldFocusedEventListener(declaredCompensationTextfield, "calculateTotalCompensation");
+        textfieldFocusedEventListener(declaredKilometersTextfield, "calculateTotalCompensation");
+    }
+
+    private void textfieldFocusedEventListener(TextField textField, String function) {
+        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            switch (function) {
+                case "checkAddress":
+                    automaticallygetFullAddressAndDistance();
+                    break;
+                case "calculateTotalCompensation":
+                    automaticallyCalculateTotalCompensation(textField);
+                    break;
+                default:
+            }
+        });
+    }
+
+    private void automaticallygetFullAddressAndDistance() {
+        if (checkForEmptyValues(false)) {
+            getFullAddressAndDistance();
+            disableTextfields(false);
+        }
+    }
+
+    private void getFullAddressAndDistance() {
+        storeAllInputValues();
+
+        if (checkForEmptyValues(true)) {
             return;
         }
 
         try {
-            String origin = beginH.trim() + "+" + beginS.trim().replaceAll(" ", "+") + "," + beginZ.trim();
-            String destination = endH.trim() + "+" + endS.trim().replaceAll(" ", "+") + "," + endZ.trim();
+            String origin = originHousenumber + "+" + originStreet.replaceAll(" ", "+") + "," + originZipcode;
+            String destination = destinationHousenumber + "+" + destinationStreet.replaceAll(" ", "+") + "," + destinationZipcode;
 
-            String[][] records = googleMapsHandler.calculate(origin, destination);
+            String[][] records = googleMapsHandler.getOriginDestinationAddressAndDistanceBetween(origin, destination);
+            mapImage.setImage(googleMapsHandler.getRouteMap(origin, destination));
 
-            googleMaps.setCenter(mapImage);
-            mapImage.setImage(googleMapsHandler.maps(origin, destination));
+            originCityTextfield.setText(records[0][3]);
+            originCountryTextfield.setText(records[0][4]);
+            destinationCityTextfield.setText(records[1][3]);
+            destinationCountryTextfield.setText(records[1][4]);
 
-            beginCity.setText(records[0][3]);
-
-            if (records[0][4].equals("Netherlands")) {
-                beginCountry.setText("Nederland");
-            } else {
-                beginCountry.setText(records[0][4]);
-            }
-
-            endCity.setText(records[1][3]);
-
-            if (records[1][4].equals("Netherlands")) {
-                endCountry.setText("Nederland");
-            } else {
-                endCountry.setText(records[1][4]);
-            }
-            kilometersKilometers.setText(records[2][0].replaceAll(",", ""));
+            declaredKilometersTextfield.setText(records[2][0]);
             emptyValues.setVisible(false);
         } catch (Exception e) {
             emptyValues.setVisible(true);
         }
     }
 
-    /**
-     * HTTP POST request op het klikken van de save knop op declarations
-     * @author Richard
-     */
+    private void automaticallyCalculateTotalCompensation(TextField textField) {
+        setCorrectVariables(textField);
+        replaceCommaForDot();
+        storeAllInputValues();
+        if (errorField == null || targetedField == null) {
+            return;
+        }
+        formatTextfieldValues();
+    }
 
-    @FXML
-    void saveButtonPressed(ActionEvent event) {
-        if (beginZipCode.getText().trim().isEmpty() ||
-                beginHouseNumber.getText().trim().isEmpty() ||
-                beginStreet.getText().trim().isEmpty() ||
-                beginCity.getText().trim().isEmpty() ||
-                beginCountry.getText().trim().isEmpty() ||
-                endZipCode.getText().trim().isEmpty() ||
-                endHouseNumber.getText().trim().isEmpty() ||
-                endStreet.getText().trim().isEmpty() ||
-                endCity.getText().trim().isEmpty() ||
-                endCountry.getText().trim().isEmpty() ||
-                kilometerDescription.getText().trim().isEmpty()) {
-                emptyValues.setVisible(true);
-        } else {
-            int ownerID = User.getUserID();
-            String description = kilometerDescription.getText();
-            double kilometers = Double.parseDouble(kilometersKilometers.getText());
-            double compensation = Double.parseDouble(kilometersCompensation.getText());
-            String beginZip = beginZipCode.getText();
-            String beginHouse = beginHouseNumber.getText();
-            String beginStr = beginStreet.getText();
-            String beginCty = beginCity.getText();
-            String beginCtry = beginCountry.getText();
-            String endZip = endZipCode.getText();
-            String endHouse = endHouseNumber.getText();
-            String endStr = endStreet.getText();
-            String endCty = endCity.getText();
-            String endCtry = endCountry.getText();
-            try {
-                incorrectDate.setVisible(false);
-
-                try {
-                    emptyValues.setVisible(false);
-                    Declaration declaration = new Declaration(
-                            ownerID, description, kilometers, compensation, beginZip, beginHouse, beginStr, beginCty, beginCtry, endZip, endHouse, endStr, endCty, endCtry);
-                    httpRequestHandler.postHandler("/declaration/create", declaration);
-                    Node node = (Node)event.getSource();
-                    appController.changeView("Declaration", node, "inherit");
-                } catch (Exception ignored) {
-                }
-            }catch(Exception e) {
-                incorrectDate.setVisible(true);
-            }
+    private void setCorrectVariables(TextField textField) {
+        if (textField.getId().contains("Kilometer")) {
+            targetedField = "kilometer";
+            errorField = incorrectKilometers;
+        } else if (textField.getId().contains("Compensation")) {
+            targetedField = "compensation";
+            errorField = incorrectCompensation;
         }
     }
 
-    public void getTodaysDate(){
-        Date today = Calendar.getInstance().getTime();
-        LocalDate date = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        dateDate.setValue(date);
+    private void replaceCommaForDot() {
+        if (declaredCompensation.contains(",") || declaredKilometers.contains(",")) {
+            declaredCompensationTextfield.setText(declaredCompensation.replace(",", "."));
+            declaredKilometersTextfield.setText(declaredKilometers.replace(",", "."));
+        }
     }
 
-    private void automaticKilometerCalculationHandler(){
-        automaticKilometer(kilometersCompensation, incorrectCompensation, "compensation");
-        automaticKilometer(kilometersKilometers, incorrectKilometers, "kilometer");
-    }
-
-    private void automaticKilometer(TextField textField, Text error, String KMorCOM){
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            String kilometersCompensationText = kilometersCompensation.getText();
-            String kilometersKilometersText = kilometersKilometers.getText();
-            if (kilometersCompensationText.contains(",") || kilometersKilometersText.contains(",")){
-                kilometersCompensation.setText(kilometersCompensationText.replace(",", "."));
-                kilometersKilometers.setText(kilometersKilometersText.replace(",", "."));
-            }
-            try{
-                error.setVisible(false);
-                switch (KMorCOM) {
-                    case "compensation":
-                        double kilometersCompensation = Double.parseDouble(kilometersCompensationText);
-                        compensationPerKilometer.setText(new DecimalFormat("#0.00").format(Double.valueOf(kilometersCompensation)));
-                    case "kilometer":
-                        double kilometers = Double.parseDouble(kilometersKilometersText);
-                        kilometersTraveled.setText((new DecimalFormat("#0.0").format(Double.valueOf(kilometers))));
-                }
-                calculateDeclaration();
-            }catch (NumberFormatException NFe){
-                error.setVisible(true);
-            }
-        });
-    }
-
-    private void calculateDeclaration(){
+    private void formatTextfieldValues() {
         try {
-            String kilometersCompensationText = kilometersCompensation.getText();
-            double kilometers = Double.parseDouble(kilometersKilometers.getText());
-            double kilometersCompensation = Double.parseDouble(kilometersCompensationText);
-            totalCompensation.setText(new DecimalFormat("###0.00").format(kilometers * kilometersCompensation));
-        }catch (Exception ignored){
-            //dit geeft een error als beide waardes nog niet zijn ingevuld. printen van de stacktrace is niet nodig.
+            errorField.setVisible(false);
+            switch (targetedField) {
+                case "compensation":
+                    compensationPerKilometer.setText(new DecimalFormat("#0.00").format(
+                            Double.valueOf(declaredCompensation)));
+                case "kilometer":
+                    kilometersTraveled.setText(new DecimalFormat("#0.0").format(
+                            Double.valueOf(declaredKilometers))
+                    );
             }
+            calculateTotalCompensation();
+
+        } catch (NumberFormatException NFe) {
+            errorField.setVisible(true);
+        }
     }
 
-    public void createNewProject(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        popupController.DisplayPopup("CreateProject", node);
+    private void calculateTotalCompensation() {
+        try {
+            totalCompensation.setText(new DecimalFormat("###0.00").format(
+                    Double.parseDouble(declaredCompensation) * Double.parseDouble(declaredKilometers)));
+        } catch (Exception ignored) {
+            //Geeft een error als beide waarde nog niet zijn ingevuld
+        }
     }
 
-    public void createNewClient(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        popupController.DisplayPopup("CreateClient", node);
-    }
-
-    public void createNewCar(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        popupController.DisplayPopup("CreateCar", node);
+    private void disableTextfields(boolean disabled) {
+        originCityTextfield.setDisable(disabled);
+        originCountryTextfield.setDisable(disabled);
+        destinationCityTextfield.setDisable(disabled);
+        destinationCountryTextfield.setDisable(disabled);
     }
 
     @FXML
-    public void cancelDeclaration(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Declaration", node, "inherit");
+    public void setTodaysDate() {
+        //retourneert de huidige datum in jjjj-mm-dd
+        LocalDate todaysDate = Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        dateDate.setValue(todaysDate);
     }
 
-    private void checkAddressHandler() {
-        checkAddressChecker(beginHouseNumber);
-        checkAddressChecker(beginZipCode);
-        checkAddressChecker(beginStreet);
-        checkAddressChecker(endHouseNumber);
-        checkAddressChecker(endZipCode);
-        checkAddressChecker(endStreet);
-    }
+    private boolean checkForEmptyValues(boolean checkAllFields) {
+        storeAllInputValues();
 
-    private void checkAddressChecker(TextField textField) {
-        textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!beginHouseNumber.getText().trim().isEmpty() && !beginZipCode.getText().trim().isEmpty() && !beginStreet.getText().trim().isEmpty() && !endHouseNumber.getText().trim().isEmpty() && !endZipCode.getText().trim().isEmpty() && !endStreet.getText().trim().isEmpty() && !textField.isFocused()) {
-                checkAddress();
-                beginCity.setDisable(false);
-                beginCountry.setDisable(false);
-                endCity.setDisable(false);
-                endCountry.setDisable(false);
+        if (firstFieldsEmpty()) {
+            emptyValues.setVisible(true);
+            return false;
+        }
+
+        if (checkAllFields) {
+            if (secondFieldsEmpty()) {
+                emptyValues.setVisible(true);
+                return false;
             }
-        });
+        }
+
+        emptyValues.setVisible(false);
+
+        return true;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        automaticKilometerCalculationHandler();
-        checkAddressHandler();
-        beginCity.setDisable(true);
-        beginCountry.setDisable(true);
-        endCity.setDisable(true);
-        endCountry.setDisable(true);
-        getTodaysDate();
-        googleMaps.setCenter(mapImage);
-        mapImage.setImage(googleMapsHandler.defaultMap());
+    private boolean firstFieldsEmpty() {
+        return originHousenumber.isEmpty() ||
+                originStreet.isEmpty() ||
+                originZipcode.isEmpty() ||
+                destinationHousenumber.isEmpty() ||
+                destinationStreet.isEmpty() ||
+                destinationZipcode.isEmpty();
     }
 
+    private boolean secondFieldsEmpty() {
+        return originCity.isEmpty() ||
+                originCountry.isEmpty() ||
+                destinationCity.isEmpty() ||
+                destinationCountry.isEmpty() ||
+                declaredCompensation.isEmpty() ||
+                declaredKilometers.isEmpty() ||
+                description.length() != 0;
+    }
+
+    @FXML
+    void attemptSaveDeclaration() {
+        if (checkForEmptyValues(true)) {
+            emptyValues.setVisible(true);
+            return;
+        }
+
+        saveDeclaration();
+    }
+
+    private void saveDeclaration() {
+        try {
+            emptyValues.setVisible(false);
+            Declaration declaration = createDeclaration();
+            httpRequestHandler.postHandler("/declaration/create", declaration);
+            appController.changeView("Declaration", applicationPane, "inherit");
+        } catch (Exception e) {
+            emptyValues.setVisible(true);
+        }
+    }
+
+    private void storeAllInputValues() {
+        this.originZipcode = originZipcodeTextfield.getText().trim();
+        this.originHousenumber = originHousenumberTextfield.getText().trim();
+        this.originStreet = originStreetTextfield.getText().trim();
+        this.originCity = originCityTextfield.getText().trim();
+        this.originCountry = originCountryTextfield.getText().trim();
+        this.destinationZipcode = destinationZipcodeTextfield.getText().trim();
+        this.destinationHousenumber = destinationHousenumberTextfield.getText().trim();
+        this.destinationStreet = destinationStreetTextfield.getText().trim();
+        this.destinationCity = destinationCityTextfield.getText().trim();
+        this.destinationCountry = destinationCountryTextfield.getText().trim();
+        this.declaredKilometers = declaredKilometersTextfield.getText().trim();
+        this.declaredCompensation = declaredCompensationTextfield.getText().trim();
+        this.description = descriptionField.getText().trim();
+    }
+
+    private Declaration createDeclaration() {
+        return new Declaration(
+                User.getUserID(),
+                description,
+                Double.parseDouble(declaredKilometers),
+                Double.parseDouble(declaredCompensation),
+                originZipcode,
+                originHousenumber,
+                originStreet,
+                originCity,
+                originCountry,
+                destinationZipcode,
+                destinationHousenumber,
+                destinationStreet,
+                destinationCity,
+                destinationCountry);
+    }
+
+    @FXML
+    public void createNewProject() {
+        popupController.openPopup("CreateProject", applicationPane);
+    }
+
+    @FXML
+    public void createNewClient() {
+        popupController.openPopup("CreateClient", applicationPane);
+    }
+
+    @FXML
+    public void createNewCar() {
+        popupController.openPopup("CreateCar", applicationPane);
+    }
+
+    @FXML
+    public void cancelDeclaration() {
+        appController.changeView("Declaration", applicationPane, "inherit");
+    }
 }

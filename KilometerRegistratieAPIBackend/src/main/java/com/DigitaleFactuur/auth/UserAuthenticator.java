@@ -16,8 +16,10 @@ public class UserAuthenticator implements Authenticator<BasicCredentials, User> 
     }
 
     @Override
-    public Optional<User> authenticate(BasicCredentials basicCredentials) {
-        return userDAO.findByUsername(
-                basicCredentials.getUsername());
-        }
+    public Optional<User> authenticate(BasicCredentials basicCredentials) throws AuthenticationException {
+        return Optional.absent();
+    }
+//        return userDAO.findByUsername(
+//                basicCredentials.getUsername());
+//        }
     }

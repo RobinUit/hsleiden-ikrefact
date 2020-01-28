@@ -8,11 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class CarJSON {
-        @XmlElement public String licencePlate;
+        @XmlElement public String licensePlate;
         @XmlElement public int ownerID;
-        @XmlElement public String carName;
-        @XmlElement public String carBrand;
-        @XmlElement public String carType;
-        @XmlElement public String carColor;
+        @XmlElement public String name;
+        @XmlElement public String brand;
+        @XmlElement public String type;
+        @XmlElement public String color;
         @XmlElement public String fuelType;
 }

@@ -3,13 +3,13 @@ package sample.Utility;
 import sample.Models.Car;
 
 public class ActiveCar {
-    private static Car auto;
+    private static Car activeCar;
 
-    public static Car getAuto() {
-        return auto;
+    public static Car getActiveCar() {
+        return activeCar;
     }
 
-    public static void setAuto(Car auto) {
-        ActiveCar.auto = auto;
+    public static void setActiveCar(Car activeCar) {
+        ActiveCar.activeCar = activeCar;
     }
 }

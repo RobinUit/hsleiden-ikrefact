@@ -9,9 +9,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
 import sample.Controllers.Popups.PopupController;
 import sample.Models.Car;
+import sample.Models.Client;
+import sample.Models.Project;
 import sample.Models.User;
 import sample.Services.HTTPRequestHandler;
 import sample.Utility.ActiveCar;
@@ -21,47 +23,35 @@ import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
 
+    @FXML
+    private AnchorPane applicationPane;
+    @FXML
+    private Button logoutButton, declarationButton, dashboardButton, profileButton, changePasswordButton, saveButton, removeClient, editClient, addProject, removeProject, editProject, addCar, removeCar, editCar,  addClient, plusButton, closeButton, hideButton;
+    @FXML
+    private ChoiceBox<String> carList, projectList, clientList;
+    @FXML
+    public TextField accountNaam, accountMail, accountPassword;
+
     private HTTPRequestHandler httpRequestHandler = new HTTPRequestHandler();
     private AppController appController = new AppController();
     private PopupController popupController = new PopupController();
 
-    private ArrayList<Car> autos;
+    private ArrayList<Car> cars;
+    private ArrayList<Client> clients;
+    private ArrayList<Project> projects;
 
-//    @FXML
-//    private ChoiceBox<?> clientList;
-//    @FXML
-//    private ChoiceBox<?> projectList;
-    @FXML
-    private ChoiceBox<String> carList;
-
-    @FXML
-    public TextField accountNaam, accountMail, accountPassword;
-
-    @FXML
-    private Button closeButton, hideButton;
-
-    @FXML
-    public void openDeclarations(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Declaration", node, "inherit");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        loadProfile();
     }
 
     @FXML
-    public void openDashboard(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Dashboard", node, "inherit");
-    }
-
-    @FXML
-    public void reloadProfile(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Profile", node, "inherit");
-    }
-
-    @FXML
-    public void changePassword(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        popupController.DisplayPopup("ChangePassword", node);
+    public void loadProfile() {
+        cars = httpRequestHandler.getCarsByID("/car/getCarsByOwnerID/" + User.getUserID());
+        loadCars(cars);
+        User currentUser =  httpRequestHandler.getUserByMail("/user/getUserByID/"+ User.getUserID());
+        accountNaam.setText(currentUser.getUsername());
+        accountMail.setText(currentUser.getEmailadress());
     }
 
     @FXML
@@ -71,14 +61,14 @@ public class ProfileController implements Initializable {
 
         switch (btnid) {
             case "addClient":
-                popupController.DisplayPopup("CreateClient", node);
+                popupController.openPopup("CreateClient", applicationPane);
                 break;
             case "addProject":
-                popupController.DisplayPopup("CreateProject", node);
+                popupController.openPopup("CreateProject", applicationPane);
                 break;
             case "addCar":
-                ActiveCar.setAuto(null);
-                popupController.DisplayPopup("CreateCar", node);
+                ActiveCar.setActiveCar(null);
+                popupController.openPopup("CreateCar", applicationPane);
                 break;
         }
     }
@@ -90,12 +80,15 @@ public class ProfileController implements Initializable {
 
         switch (btnid) {
             case "editClient":
+                //niet geïmplementeerd
+                break;
             case "editProject":
+                //niet geïmplementeerd
                 break;
             case "editCar":
                 loadCar();
-                if (ActiveCar.getAuto() != null) {
-                    popupController.DisplayPopup("CreateCar", node);
+                if (ActiveCar.getActiveCar() != null) {
+                    popupController.openPopup("CreateCar", applicationPane);
                 }
                 break;
 
@@ -115,78 +108,75 @@ public class ProfileController implements Initializable {
 
         switch (btnid) {
             case "removeClient":
+                //niet geïmplementeerd
+                break;
             case "removeProject":
+                //niet geïmplementeerd
                 break;
             case "removeCar":
                 loadCar();
-                if (ActiveCar.getAuto() != null){
-                    httpRequestHandler.removeFromTableById("car", ActiveCar.getAuto().getLicencePlate());
-                    reloadProfile(event);
+                if (ActiveCar.getActiveCar() != null){
+                    httpRequestHandler.removeFromTableById("car", ActiveCar.getActiveCar().getLicensePlate());
+                    loadProfile();
                 }
                 break;
         }
     }
 
-    /**
-    * opslaan account gegevens
-     */
-    @FXML
-    void save() {
-    }
-
-    /**
-     * nieuwe declaratie
-     */
-    @FXML
-    void newDeclaration(ActionEvent event){
-        Node node = (Node)event.getSource();
-        appController.changeView("CreateDeclaration", node, "inherit");
-    }
-
-    /**
-     * close, minimize en logout
-     */
-    @FXML
-    public void close() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
-
-    @FXML
-    public void hide() {
-        Stage stage = (Stage) hideButton.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    @FXML
-    void logout(ActionEvent event) {
-        Node node = (Node)event.getSource();
-        appController.changeView("Login", node, "center");
-    }
-
     private void loadCars(ArrayList<Car> cars){
         ArrayList<String> st = new ArrayList<>();
         for (Car car : cars) {
-            st.add(car.getLicencePlate());
+            st.add(car.getLicensePlate());
         }
         ObservableList<String> availableChoices = FXCollections.observableArrayList(st);
         carList.setItems(availableChoices);
     }
 
     private void loadCar(){
-        for (Car auto : autos) {
-            if (auto.getLicencePlate().equals(carList.getValue())) {
-                ActiveCar.setAuto(auto);
+        for (Car car : cars) {
+            if (car.getLicensePlate().equals(carList.getValue())) {
+                ActiveCar.setActiveCar(car);
             }
         }
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        autos = httpRequestHandler.getCarsByID("/car/getCarsByOwnerID/" + User.getUserID());
-        loadCars(autos);
-        User u =  httpRequestHandler.getUserByMail("/user/getUserByID/"+ User.getUserID());
-        accountNaam.setText(u.getUsername());
-        accountMail.setText(u.getEmailadress());
+    @FXML
+    void save() {
+        //niet geïmplementeerd
+    }
+
+    @FXML
+    public void changePassword() {
+        popupController.openPopup("ChangePassword", applicationPane);
+    }
+
+    @FXML
+    public void openDeclarations() {
+        appController.changeView("Declaration", applicationPane, "inherit");
+    }
+
+    @FXML
+    public void openDashboard() {
+        appController.changeView("Dashboard", applicationPane, "inherit");
+    }
+
+    @FXML
+    void newDeclaration(){
+        appController.changeView("CreateDeclaration", applicationPane, "inherit");
+    }
+
+    @FXML
+    void logout() {
+        appController.logout(applicationPane);
+    }
+
+    @FXML
+    public void minimizeApplication() {
+        appController.minimizeApplication(applicationPane);
+    }
+
+    @FXML
+    public void closeApplication() {
+        appController.closeApplication(applicationPane);
     }
 }

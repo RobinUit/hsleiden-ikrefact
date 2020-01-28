@@ -195,7 +195,7 @@
                 <configuration>
                     <changeLogFile>migrations.xml</changeLogFile>
                     <driver>com.mysql.cj.jdbc.Driver</driver>
-                    <url>jdbc:mysql://localhost:3306/ipsen2?serverTimezone=UTC</url>
+                    <url>jdbc:mysql://localhost:3306/ikrefact?serverTimezone=UTC</url>
                     <username>robin</username>
                     <password>Robin5000</password>
                 </configuration>
