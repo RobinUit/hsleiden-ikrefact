@@ -13,6 +13,7 @@ import sample.Services.HTTPRequestHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//Deze klasse is niet gerefactored!
 public class DeclarationController implements Initializable {
 
     @FXML

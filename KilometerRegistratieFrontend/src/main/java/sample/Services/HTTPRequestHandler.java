@@ -16,7 +16,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+//Deze klasse is niet gerefactored!
 public class HTTPRequestHandler {
 
     private String url = "http://localhost:8080";

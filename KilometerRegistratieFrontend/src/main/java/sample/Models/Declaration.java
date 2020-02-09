@@ -51,23 +51,115 @@ public class Declaration {
         this.destinationCountry = destinationCountry;
     }
 
+    public int getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(int ownerID) {
+        this.ownerID = ownerID;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getDeclaredKilometers() {
         return declaredKilometers;
     }
 
+    public void setDeclaredKilometers(double declaredKilometers) {
+        this.declaredKilometers = declaredKilometers;
+    }
+
     public double getDeclaredCompensation() {
         return declaredCompensation;
+    }
+
+    public void setDeclaredCompensation(double declaredCompensation) {
+        this.declaredCompensation = declaredCompensation;
     }
 
     public String getOriginZipcode() {
         return originZipcode;
     }
 
+    public void setOriginZipcode(String originZipcode) {
+        this.originZipcode = originZipcode;
+    }
+
+    public String getOriginHouseNumber() {
+        return originHouseNumber;
+    }
+
+    public void setOriginHouseNumber(String originHouseNumber) {
+        this.originHouseNumber = originHouseNumber;
+    }
+
+    public String getOriginStreet() {
+        return originStreet;
+    }
+
+    public void setOriginStreet(String originStreet) {
+        this.originStreet = originStreet;
+    }
+
+    public String getOriginCity() {
+        return originCity;
+    }
+
+    public void setOriginCity(String originCity) {
+        this.originCity = originCity;
+    }
+
+    public String getOriginCountry() {
+        return originCountry;
+    }
+
+    public void setOriginCountry(String originCountry) {
+        this.originCountry = originCountry;
+    }
+
     public String getDestinationZipcode() {
         return destinationZipcode;
+    }
+
+    public void setDestinationZipcode(String destinationZipcode) {
+        this.destinationZipcode = destinationZipcode;
+    }
+
+    public String getDestinationHouseNumber() {
+        return destinationHouseNumber;
+    }
+
+    public void setDestinationHouseNumber(String destinationHouseNumber) {
+        this.destinationHouseNumber = destinationHouseNumber;
+    }
+
+    public String getDestinationStreet() {
+        return destinationStreet;
+    }
+
+    public void setDestinationStreet(String destinationStreet) {
+        this.destinationStreet = destinationStreet;
+    }
+
+    public String getDestinationCity() {
+        return destinationCity;
+    }
+
+    public void setDestinationCity(String destinationCity) {
+        this.destinationCity = destinationCity;
+    }
+
+    public String getDestinationCountry() {
+        return destinationCountry;
+    }
+
+    public void setDestinationCountry(String destinationCountry) {
+        this.destinationCountry = destinationCountry;
     }
 }

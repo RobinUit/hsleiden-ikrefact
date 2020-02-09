@@ -20,11 +20,11 @@ public class GoogleMapsHandler {
     private String requestUrl;
     private String parameters;
     private WritableImage map = null;
-    private String[][] originDestinationDistance;
     private JSONObject responseInJSONObject;
     private String[] originAddress;
     private String[] destinationAddress;
     private String[] distanceBetween;
+    private String[][] originDestinationDistance;
 
 
     public String[][] getOriginDestinationAddressAndDistanceBetween(String origin, String destination) {
@@ -94,17 +94,18 @@ public class GoogleMapsHandler {
     }
 
     private void extractDistanceBetween() {
-        JSONArray dist = (JSONArray) responseInJSONObject.get("rows");
-        JSONObject obj2 = (JSONObject) dist.get(0);
-        JSONArray disting = (JSONArray) obj2.get("elements");
-        JSONObject obj3 = (JSONObject) disting.get(0);
-        JSONObject obj4 = (JSONObject) obj3.get("distance");
-        String kmplustext = (String) obj4.get("text");
-        String km = kmplustext.split(" ")[0];
+        JSONArray rows = (JSONArray) responseInJSONObject.get("rows");
+        JSONObject rowsObject = (JSONObject) rows.get(0);
+        JSONArray elements = (JSONArray) rowsObject.get("elements");
+        JSONObject elementsObject = (JSONObject) elements.get(0);
+        JSONObject distance = (JSONObject) elementsObject.get("distance");
+        String kilometersPlusText = (String) distance.get("text");
+        String kilometers = kilometersPlusText.split(" ")[0];
 
-        distanceBetween = new String[]{km};
+        distanceBetween = new String[]{kilometers};
     }
 
+    //Deze functie is niet gerefactored!
     private String[] toVariables(String address) {
         try {
             String[] temp;
