@@ -48,18 +48,9 @@ public class CreateDeclarationController implements Initializable {
     private AppController appController = new AppController();
     private PopupController popupController = new PopupController();
 
-    private String originZipcode;
-    private String originHousenumber;
-    private String originStreet;
-    private String originCity;
-    private String originCountry;
-    private String destinationZipcode;
-    private String destinationHousenumber;
-    private String destinationStreet;
-    private String destinationCity;
-    private String destinationCountry;
-    private String declaredKilometers;
-    private String declaredCompensation;
+    private String originZipcode, originHousenumber, originStreet, originCity, originCountry;
+    private String destinationZipcode, destinationHousenumber, destinationStreet, destinationCity, destinationCountry;
+    private String declaredKilometers, declaredCompensation;
     private String description;
 
     private String targetedField;

@@ -16,15 +16,15 @@ public class DeclarationDAO extends AbstractDAO<Declaration> {
         super(sessionFactory);
     }
 
-    private String getDeclarationByOwnerIDQuery(int ownerID) {
+    private static String getDeclarationByOwnerIDQuery(int ownerID) {
         return "SELECT * FROM declaration WHERE ownerID = '" + ownerID + "'";
     }
 
-    private String deleteDeclarationByIDQuery(int declarationID) {
+    private static String deleteDeclarationByIDQuery(int declarationID) {
         return "DELETE FROM declaration WHERE declarationID = '" + declarationID + "';";
     }
 
-    private String deleteDeclarationByOwnerIDQuery(int ownerID) {
+    private static String deleteDeclarationByOwnerIDQuery(int ownerID) {
         return "DELETE FROM declaration WHERE ownerID = '" + ownerID + "';";
     }
 
