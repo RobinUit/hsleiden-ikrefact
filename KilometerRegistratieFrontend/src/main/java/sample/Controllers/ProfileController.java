@@ -51,7 +51,7 @@ public class ProfileController implements Initializable {
         loadCars(cars);
         User currentUser =  httpRequestHandler.getUserByMail("/user/getUserByID/"+ User.getUserID());
         accountNaam.setText(currentUser.getUsername());
-        accountMail.setText(currentUser.getEmailadress());
+        accountMail.setText(currentUser.getEmail());
     }
 
     @FXML
@@ -80,10 +80,10 @@ public class ProfileController implements Initializable {
 
         switch (btnid) {
             case "editClient":
-                //niet geïmplementeerd
+                //not yet implemented
                 break;
             case "editProject":
-                //niet geïmplementeerd
+                //not yet implemented
                 break;
             case "editCar":
                 loadCar();
@@ -108,10 +108,10 @@ public class ProfileController implements Initializable {
 
         switch (btnid) {
             case "removeClient":
-                //niet geïmplementeerd
+                //not yet implemented
                 break;
             case "removeProject":
-                //niet geïmplementeerd
+                //not yet implemented
                 break;
             case "removeCar":
                 loadCar();
@@ -142,7 +142,7 @@ public class ProfileController implements Initializable {
 
     @FXML
     void save() {
-        //niet geïmplementeerd
+        //not yet implemented
     }
 
     @FXML

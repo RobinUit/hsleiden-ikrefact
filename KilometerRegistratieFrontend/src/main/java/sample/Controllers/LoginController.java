@@ -29,7 +29,6 @@ public class LoginController {
     private String password;
     private User user;
 
-    //dit is een hele slechte manier om je gebruikers te laten authenticaten, pls no hate im nub :)
     @FXML
     void attemptLogin() {
         email = emailField.getText().trim();

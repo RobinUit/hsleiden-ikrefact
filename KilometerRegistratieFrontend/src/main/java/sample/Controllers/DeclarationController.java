@@ -13,7 +13,7 @@ import sample.Services.HTTPRequestHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//Deze klasse is niet gerefactored!
+//IKREFACT Deze klasse is niet gerefactored!
 public class DeclarationController implements Initializable {
 
     @FXML
@@ -236,17 +236,17 @@ public class DeclarationController implements Initializable {
 
     @FXML
     public void edit() {
-        //niet geïmplementeerd
+        //not yet implemented
     }
 
     @FXML
     public void delete() {
-        //niet geïmplementeerd
+        //not yet implemented
     }
 
     @FXML
     public void duplicate() {
-        //niet geïmplementeerd
+        //not yet implemented
     }
 
     @FXML

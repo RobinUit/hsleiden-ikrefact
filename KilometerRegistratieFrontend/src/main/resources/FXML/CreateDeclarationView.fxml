@@ -243,7 +243,7 @@
             <Font name="Arial Rounded MT Bold" size="13.0"/>
          </font>
       </TextArea>
-      <DatePicker fx:id="dateDate" layoutX="808.0" layoutY="279.0" prefHeight="33.0" prefWidth="137.0"
+      <DatePicker fx:id="dateField" layoutX="808.0" layoutY="279.0" prefHeight="33.0" prefWidth="137.0"
                   promptText="Datum "/>
       <Text fx:id="incorrectDate" fill="RED" layoutX="822.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0"
             text="Vul een datum in." visible="false" AnchorPane.bottomAnchor="500.0">

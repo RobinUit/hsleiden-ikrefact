@@ -27,5 +27,5 @@ public class HelloResource {
         return "Hello secured world";
     }
 
-    //DIT IS EEN TESTKLASSE
+    //IKREFACT DIT IS EEN TESTKLASSE
 }

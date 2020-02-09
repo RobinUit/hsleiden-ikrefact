@@ -27,7 +27,7 @@ public class CreateDeclarationController implements Initializable {
     @FXML
     public TextField originZipcodeTextfield, originHousenumberTextfield, originStreetTextfield, originCityTextfield, originCountryTextfield, destinationZipcodeTextfield, destinationHousenumberTextfield, destinationStreetTextfield, destinationCityTextfield, destinationCountryTextfield, declaredKilometersTextfield, declaredCompensationTextfield;
     @FXML
-    public DatePicker dateDate;
+    public DatePicker dateField;
     @FXML
     public Text incorrectKilometers, incorrectCompensation, incorrectDate, kilometersTraveled, compensationPerKilometer, totalCompensation;
     @FXML
@@ -182,7 +182,7 @@ public class CreateDeclarationController implements Initializable {
             totalCompensation.setText(new DecimalFormat("###0.00").format(
                     Double.parseDouble(declaredCompensation) * Double.parseDouble(declaredKilometers)));
         } catch (Exception ignored) {
-            //Geeft een error als beide waarde nog niet zijn ingevuld
+            //returns an error when both values are not filled in (yet)
         }
     }
 
@@ -195,10 +195,10 @@ public class CreateDeclarationController implements Initializable {
 
     @FXML
     public void setTodaysDate() {
-        //retourneert de huidige datum in jjjj-mm-dd
+        //returns the current date in YYYY-MM-DD
         LocalDate todaysDate = Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        dateDate.setValue(todaysDate);
+        dateField.setValue(todaysDate);
     }
 
     private boolean checkForEmptyValues(boolean checkAllFields) {

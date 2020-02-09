@@ -23,7 +23,7 @@ public class ChangePasswordPopupController {
 
     @FXML
     private void changePassword() {
-        //niet geïmplementeerd
+        //not yet implemented
         closePopup();
     }
 

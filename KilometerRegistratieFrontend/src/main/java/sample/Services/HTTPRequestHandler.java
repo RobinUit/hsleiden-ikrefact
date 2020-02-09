@@ -21,8 +21,6 @@ public class HTTPRequestHandler {
 
     private String url = "http://localhost:8080";
 
-
-    //POST
     public void postHandler(String extraUrl, Object object) throws Exception {
         Gson gson = new Gson();
         HttpClient httpClient = HttpClientBuilder.create().build();
@@ -54,8 +52,6 @@ public class HTTPRequestHandler {
         }
         return null;
     }
-
-
 
     public int getUserIDByEmail(String extraUrl){
         int niks = 0;

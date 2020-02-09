@@ -115,20 +115,20 @@ public class GoogleMapsHandler {
             String[] ar = new String[5];
 
             int index = temp[0].lastIndexOf(" ");
-            String straat = temp[0].substring(0, index);
-            String huisnummer = temp[0].substring(index + 1);
+            String street = temp[0].substring(0, index);
+            String housenumber = temp[0].substring(index + 1);
 
             if (temp.length == 4) {
-                ar[0] = straat.trim(); //straatnaam
-                ar[1] = huisnummer.trim(); //huisnummer
-                ar[2] = temp[2].substring(0, 8).trim(); //postcode
-                ar[3] = temp[2].substring(9).trim(); //plaatsnaam
+                ar[0] = street.trim(); //street
+                ar[1] = housenumber.trim(); //housenumber
+                ar[2] = temp[2].substring(0, 8).trim(); //zipcode
+                ar[3] = temp[2].substring(9).trim(); //city
                 ar[4] = temp[3].trim(); //country
             } else if (temp.length == 3) {
-                ar[0] = straat.trim(); //straatnaam
-                ar[1] = huisnummer.trim(); //huisnummer
-                ar[2] = temp[1].substring(0, 8).trim(); //postcode
-                ar[3] = temp[1].substring(9).trim(); //plaatsnaam
+                ar[0] = street.trim(); //street
+                ar[1] = housenumber.trim(); //housenumber
+                ar[2] = temp[1].substring(0, 8).trim(); //zipcode
+                ar[3] = temp[1].substring(9).trim(); //city
                 ar[4] = temp[2].trim(); //country
             }
             return ar;
