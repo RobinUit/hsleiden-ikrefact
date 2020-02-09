@@ -30,7 +30,7 @@ public class GoogleMapsHandler {
     public String[][] getOriginDestinationAddressAndDistanceBetween(String origin, String destination) {
         parameters =
                 "origins=" + origin +
-                        "&destinations=" + destination;
+                "&destinations=" + destination;
 
         buildRequestUrl("distancematrix/json", parameters);
 
@@ -52,11 +52,11 @@ public class GoogleMapsHandler {
 
     private void buildAndSendRequest(String requestUrl) {
         try {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient httpClient = new OkHttpClient();
             Request request = new Request.Builder()
                     .url(requestUrl)
                     .build();
-            response = client.newCall(request).execute();
+            response = httpClient.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

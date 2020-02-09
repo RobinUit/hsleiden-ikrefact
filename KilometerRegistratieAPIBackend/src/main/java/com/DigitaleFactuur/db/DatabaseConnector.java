@@ -18,7 +18,7 @@ class DatabaseConnector {
         }
     }
 
-    //voor het ophalen van gegevens uit de database
+    //for retrieving records from the database
     static ResultSet executeDatabaseQuery(String query) {
         try {
             prepareStatement(query);
@@ -29,7 +29,7 @@ class DatabaseConnector {
         return null;
     }
 
-    //voor het verwijderen of updaten van gegevens uit de database
+    //for deleting or updating records in the database
     static void executeDatabaseUpdate(String query) {
         try {
             prepareStatement(query);
@@ -53,3 +53,5 @@ class DatabaseConnector {
         }
     }
 }
+
+
